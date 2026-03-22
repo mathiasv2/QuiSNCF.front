@@ -19,10 +19,9 @@ export function useRandomStation() {
 
 export function useCheckUserInput(){
 
-    const checkInput = async (input: string) => {
+    const checkInput = async (input: string): Promise<boolean | any> => {
         try {
-            const result = await postInput(input)
-            return result
+            return await postInput(input)
         } catch (err) {
             console.log(err)
         }

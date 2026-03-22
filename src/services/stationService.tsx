@@ -9,8 +9,9 @@ export const getRandomStation = async (): Promise<Station | null> => {
 export const postInput = async (input: string) => {
     try {
         const response = await api.post(`station/checkinput/${input}`)
-        return response
+        return response.data
     } catch(err){
         console.log(err)
+        return false
     }
 }
