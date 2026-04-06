@@ -26,8 +26,6 @@ function App() {
     
 return (
     <div className="bg-black">
-      <h1 className="text-3xl text-white">{station.name}</h1>
-      <p className="text-3xl text-white"> {station.city}</p>
       <p>{station.hint}</p>
       <div className="flex flex-col">
         <div className="flex flex-col items-center gap-4 justify-center">

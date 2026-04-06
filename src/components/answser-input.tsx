@@ -11,7 +11,7 @@ export function TextInput({ value, onChange, placeholder }: Props) {
       type="text"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder ?? "Votre réponse..."}/>
+      placeholder={placeholder ?? "Ville de cette gare..."}/>
     </div>
 
   );

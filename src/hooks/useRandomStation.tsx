@@ -26,7 +26,5 @@ export function useCheckUserInput(){
             console.log(err)
         }
     }
-
     return {checkInput}
-
 }
