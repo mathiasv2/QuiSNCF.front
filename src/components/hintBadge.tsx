@@ -34,7 +34,7 @@ export function HintButton({ hint, onReveal }: Props) {
           <span className="text-zinc-500">Indice :</span>
           {words.map((word, i) => (
             <span key={i} className="relative inline-block">
-              {/* Texte réel */}
+              {hint}
               <span
                 className="text-white"
                 style={{

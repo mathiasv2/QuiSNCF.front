@@ -12,13 +12,15 @@ export function StationImage({ src, zoom }: Props) {
   }))
 
   return (
-    <div
-      className="w-64 h-64 rounded-xl transition-all duration-700 border border-white/10"
-      style={{
-        backgroundImage: `url(${src})`,
-        backgroundSize: `${zoom}%`,
-        backgroundPosition: `${pos.x}% ${pos.y}%`,
-      }}
-    />
+
+      <div
+        className="w-64 h-64 rounded-xl transition-all duration-700 border-white border-2"
+        style={{
+          backgroundImage: `url(${src})`,
+          backgroundSize: `${zoom}%`,
+          backgroundPosition: `${pos.x}% ${pos.y}%`,
+        }}
+      />
+
   )
 }
