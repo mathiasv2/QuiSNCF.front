@@ -11,11 +11,13 @@ const ZOOM_LEVELS = [1000, 600, 550, 500, 450, 400, 350, 300, 250, 200, 150, 120
 export function GameContainer() {
   const { station, loading, error } = useRandomStation()
   const [guess, setGuess] = useState("")
+  const [guessCounter, setGuessCounter] = useState(0);
 
   const handleSubmit = () => {
-  if (!guess.trim()) return
-  console.log("Réponse :", guess)
-  setGuess("")
+    if (guess.trim().toLowerCase() != station?.city.toLowerCase())
+      setGuessCounter(guessCounter+1)
+    console.log(guessCounter)
+
 }
 
 
@@ -26,11 +28,11 @@ export function GameContainer() {
 
   return (
     <div className="flex flex-col items-center gap-20 border-2 border-white rounded-xl bg-blue-500 py-8 px-20">
-      <p className="font-semibold text-3xl text-center text-blue">Devinez la gare du jour</p>
+      <p className="font-semibold text-3xl text-center text-blue ">Devinez la gare du jour</p>
 
       <StationImage
         src={`${station.pictureUrl}.jpg`}
-        zoom={ZOOM_LEVELS[0]}
+        zoom={ZOOM_LEVELS[guessCounter]}
       />
       <div className="flex gap-4">
       <UserInput value={guess} onChange={setGuess} onEnter={handleSubmit} />
