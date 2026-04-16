@@ -13,6 +13,7 @@ export function StationImage({ src, zoom }: Props) {
 
   return (
 
+
       <div
         className="w-64 h-64 rounded-xl transition-all duration-700 border-white border-2"
         style={{
@@ -21,6 +22,7 @@ export function StationImage({ src, zoom }: Props) {
           backgroundPosition: `${pos.x}% ${pos.y}%`,
         }}
       />
+
 
   )
 }
