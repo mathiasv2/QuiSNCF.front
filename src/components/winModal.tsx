@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { usePostPlayer } from "../hooks/usePlayer"
 
 interface Props {
   city: string
@@ -8,10 +9,14 @@ interface Props {
 }
 
 const SCORE_LABELS = [
-  { min: 90, label: "Légendaire", emoji: "🏆", color: "text-yellow-300" },
-  { min: 70, label: "Expert",     emoji: "⭐",  color: "text-blue-200"   },
-  { min: 50, label: "Bien joué",  emoji: "👍",  color: "text-green-300"  },
-  { min: 0,  label: "Rescapé",    emoji: "😅",  color: "text-orange-300" },
+    { min: 5000, label: "Chef de gare", emoji: "🏆", color: "text-yellow-300" },
+    { min: 4000, label: "Conducteur de train",     emoji: "⭐",  color: "text-blue-200"   },
+    { min: 3000, label: "Agent de terrain",  emoji: "👍",  color: "text-green-300"  },
+    { min: 2000,  label: "Voyageur",    emoji: "😅",  color: "text-orange-300" },
+    { min: 1000,  label: "Pigeon de gare",    emoji: "😅",  color: "text-brown-300" },
+    { min: 0,  label: "Joueur de diabolo",    emoji: "😅",  color: "text-black" },
+
+
 ]
 
 function computeScore(guessCount: number) {
@@ -22,6 +27,8 @@ export function WinModal({ city, guessCount, onClose }: Props) {
   const [pseudo, setPseudo] = useState("")
   const [saved, setSaved] = useState(false)
   const [visible, setVisible] = useState(false)
+  const { submit } = usePostPlayer()
+  
 
   const score = computeScore(guessCount)
   const rank = SCORE_LABELS.find((r) => score >= r.min)!
@@ -31,10 +38,11 @@ export function WinModal({ city, guessCount, onClose }: Props) {
     return () => clearTimeout(t)
   }, [])
 
-  const handleSave = () => {
-    
+  const handleSave = async () => {
+
     if (!pseudo.trim()) return
-    console.log({ pseudo: pseudo.trim(), score, guessCount, city })
+    console.log
+    await submit({ name: pseudo.trim(), tries: guessCount, multiplier: guessCount })
     setSaved(true)
   }
 
