@@ -10,6 +10,9 @@ export function useGameLogic(cityAnswer: string) {
   const [guessCount, setGuessCount] = useState(0)
   const [status, setStatus] = useState<GameStatus>("playing")
 
+
+  
+
   const zoom = ZOOM_LEVELS[Math.min(guessCount, MAX_ATTEMPTS)]
 
   const handleSubmit = () => {
@@ -17,8 +20,6 @@ export function useGameLogic(cityAnswer: string) {
 
     if (guess.trim().toLowerCase() === cityAnswer.toLowerCase()) {
       setStatus("won")
-    } else if (guessCount >= MAX_ATTEMPTS) {
-      setStatus("lost")
     } else {
       setGuessCount((prev) => prev + 1)
     }

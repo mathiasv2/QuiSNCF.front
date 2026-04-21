@@ -4,8 +4,6 @@ import { usePostPlayer } from "../hooks/usePlayer"
 interface Props {
   city: string
   guessCount: number
-  maxAttempts: number
-  onClose: () => void
 }
 
 const SCORE_LABELS = [
@@ -15,15 +13,13 @@ const SCORE_LABELS = [
     { min: 2000,  label: "Voyageur",    emoji: "😅",  color: "text-orange-300" },
     { min: 1000,  label: "Pigeon de gare",    emoji: "😅",  color: "text-brown-300" },
     { min: 0,  label: "Joueur de diabolo",    emoji: "😅",  color: "text-black" },
-
-
 ]
 
 function computeScore(guessCount: number) {
   return Math.round(5000 - (guessCount * 325))
 }
 
-export function WinModal({ city, guessCount, onClose }: Props) {
+export function WinModal({ city, guessCount }: Props) {
   const [pseudo, setPseudo] = useState("")
   const [saved, setSaved] = useState(false)
   const [visible, setVisible] = useState(false)
@@ -54,7 +50,7 @@ export function WinModal({ city, guessCount, onClose }: Props) {
         transition-opacity duration-300
         ${visible ? "opacity-100" : "opacity-0"}
       `}
-      onClick={onClose}
+      onClick={() => setVisible(false)}
     >
       <div
         className={`
@@ -113,9 +109,9 @@ export function WinModal({ city, guessCount, onClose }: Props) {
         )}
 
         <button
-          onClick={onClose}
-          className="absolute top-3 right-4 text-white/30 hover:text-white/70 text-xl transition-colors"
-          aria-label="Fermer"
+            onClick={() => setVisible(false)}
+            className="absolute top-3 right-4 text-white/30 hover:text-white/70 text-xl transition-colors"
+            aria-label="Fermer"
         >
           ✕
         </button>
