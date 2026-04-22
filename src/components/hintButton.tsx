@@ -17,11 +17,9 @@ export function HintButton({ hint, tries }: Props) {
         {visible ? "Masquer l'indice" : "Voir l'indice"}
       </button>
 
-      {visible && (
-        <p className="text-sm text-amber-600 text-center max-w-xs">
-          {hint}
-        </p>
-      )}
+      <p className={`text-sm text-amber-600 text-center max-w-xs ${visible ? "" : "invisible"}`}>
+        {hint}
+      </p>
     </div>
   )
 }

@@ -23,6 +23,19 @@
 
 @theme {
   --font-avenir: 'Avenir', sans-serif;
+  --color-ambre: #EDD484;
+  --color-safran: #DAAA00;
+  --color-menthe: #A1D6CA;
+  --color-foret: #154734;
+  --color-ocre: #DC582A;
+  --color-mordore: #4A412A;
+  --color-peche: #FDBE87;
+  --color-nude: #F8C1B8;
+  --color-lavande: #6558B1;
+  --color-parme: #C7B2DE;
+  --color-aubergine: #3F2A56
+
+
 }
 
 body {

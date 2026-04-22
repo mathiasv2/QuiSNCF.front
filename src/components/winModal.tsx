@@ -16,7 +16,7 @@ const SCORE_LABELS = [
 ]
 
 function computeScore(guessCount: number) {
-  return Math.round(5000 - (guessCount * 325))
+  return Math.round(5000 - (guessCount * 323))
 }
 
 export function WinModal({ city, guessCount }: Props) {

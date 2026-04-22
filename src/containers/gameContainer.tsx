@@ -17,10 +17,10 @@ export function GameContainer() {
     <p className="text-red-400 text-center">{error ?? "Aucune station disponible"}</p>
   )
 
-  return <GameInner city={station.city} pictureUrl={station.pictureUrl} hint={station.hint} />
+  return <GameInner city={station.city} pictureUrl={station.pictureUrl} hint={station.hint} x={station.x} y={station.y}/>
 }
 
-function GameInner({ city, pictureUrl, hint }: { city: string; pictureUrl: string, hint:string }) {
+function GameInner({ city, pictureUrl, hint, x, y }: { city: string; pictureUrl: string, hint:string, x:number, y:number }) {
   const { guess, setGuess, zoom, guessCount, status, handleSubmit } = useGameLogic(city)
 
   return (
@@ -32,22 +32,22 @@ function GameInner({ city, pictureUrl, hint }: { city: string; pictureUrl: strin
         />
       )}
 
-      <div className="flex flex-col items-center border-2 border-white rounded-4xl bg-blue-500 py-4 px-20">
+      <div className="flex flex-col items-center rounded-4xl bg-parme py-4 px-20">
         <div className="flex">
-        <p className="font-semibold text-3xl text-center text-white pt-6">
+        <p className="font-semibold text-3xl text-center text-aubergine pt-6">
           Devinez la gare du jour
         </p>     
         </div>
 
 
         <div className="py-9 flex flex-col gap-y-3">
-          <StationImage src={`${pictureUrl}.jpg`} zoom={zoom} status={status} />
+          <StationImage src={`${pictureUrl}.jpg`} zoom={zoom} status={status} x={x} y={y} />
           <HintButton hint={hint} tries={guessCount}/>
         </div>
 
 
 
-        <div className="flex mt-4 gap-x-3">
+        <div className="flex my-3 gap-x-3">
           <UserInput value={guess} onChange={setGuess} onEnter={handleSubmit} />
           <ValidateButton onClick={handleSubmit} disabled={!guess.trim()} />
         </div>

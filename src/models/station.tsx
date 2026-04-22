@@ -4,4 +4,6 @@ export interface Station {
   pictureUrl: string
   hint: string
   lastTimePlayed: string 
+  x: number
+  y: number
 }

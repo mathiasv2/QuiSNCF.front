@@ -5,12 +5,14 @@ interface Props {
   src: string
   zoom: number
   status: GameStatus
+  x: number
+  y: number
 }
 
-export function StationImage({ src, zoom, status }: Props) {
+export function StationImage({ src, zoom, status, x, y }: Props) {
   const [pos] = useState(() => ({
-    x: Math.round(Math.random() * 100),
-    y: Math.round(Math.random() * 100),
+    x: Math.round(x * 100),
+    y: Math.round(y * 100),
   }))
 
   const won = status === "won"
