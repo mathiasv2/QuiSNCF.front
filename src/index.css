@@ -22,6 +22,7 @@
 }
 
 @theme {
+  --font-achemine: 'Achemine', sans-serif;
   --font-avenir: 'Avenir', sans-serif;
   --color-ambre: #EDD484;
   --color-safran: #DAAA00;

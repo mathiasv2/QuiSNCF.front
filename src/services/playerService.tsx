@@ -6,11 +6,16 @@ export const postPlayer = async (player: Player): Promise<boolean> => {
     await api.post("player/createPlayer", {
       name: player.name,
       tries: player.tries,
-      multiplier: player.multiplier,
     })
     return true
   } catch (err) {
     console.error(err)
     return false
   }
+}
+
+
+export const getBillboard = async (): Promise<Player | null> => {
+  const response = await api.get("player/getBillboard")
+  return response.data;
 }

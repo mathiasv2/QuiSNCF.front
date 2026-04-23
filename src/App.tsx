@@ -3,6 +3,7 @@ import { GamePage } from './pages/gamePage'
 import { HomePage } from './pages/homePage'
 import { CookiesProvider } from 'react-cookie'
 import { Footer } from './components/footer'
+import { LeaderboardPage } from './pages/leaderboardPage'
 
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
         <Routes>
           <Route path='/' element={<HomePage/>}/>
           <Route path='/game' element={<GamePage/>}/>
+          <Route path='/leaderboard' element={<LeaderboardPage/>}/>
         </Routes>
         <Footer/>
       </div>

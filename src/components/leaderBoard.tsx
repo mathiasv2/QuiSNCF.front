@@ -1,8 +1,13 @@
+interface Props {
+  name: string
+  score: number
+}
+
+
 export function LeaderBoard() {
   return (
-    <div className="z-2 flex flex-col items-center">
-        <div className="col-3 h-60 w-96">
-        </div>
-    </div>
+  <div className="flex justify-center">
+    <div className="border-2 border-amber-500"></div>
+  </div>
   )
 }
