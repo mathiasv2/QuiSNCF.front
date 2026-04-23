@@ -4,6 +4,7 @@ import { usePostPlayer } from "../hooks/usePlayer"
 interface Props {
   city: string
   guessCount: number
+  onClose: () => void
 }
 
 const SCORE_LABELS = [
@@ -19,7 +20,7 @@ function computeScore(guessCount: number) {
   return Math.round(5000 - (guessCount * 323))
 }
 
-export function WinModal({ city, guessCount }: Props) {
+export function WinModal({ city, guessCount, onClose }: Props) {
   const [pseudo, setPseudo] = useState("")
   const [saved, setSaved] = useState(false)
   const [visible, setVisible] = useState(false)
@@ -50,7 +51,7 @@ export function WinModal({ city, guessCount }: Props) {
         transition-opacity duration-300
         ${visible ? "opacity-100" : "opacity-0"}
       `}
-      onClick={() => setVisible(false)}
+      onClick={onClose}
     >
       <div
         className={`
@@ -109,9 +110,10 @@ export function WinModal({ city, guessCount }: Props) {
         )}
 
         <button
-            onClick={() => setVisible(false)}
+            onClick={onClose}
             className="absolute top-3 right-4 text-white/30 hover:text-white/70 text-xl transition-colors"
             aria-label="Fermer"
+
         >
           ✕
         </button>

@@ -6,6 +6,7 @@ import { StationImage } from "../components/stationImage.tsx"
 import { UserInput } from "../components/userInput.tsx"
 import { WinModal } from "../components/winModal"
 import { HintButton } from "../components/hintButton.tsx"
+import { useEffect, useState } from "react"
 
 
 export function GameContainer() {
@@ -22,13 +23,19 @@ export function GameContainer() {
 
 function GameInner({ city, pictureUrl, hint, x, y }: { city: string; pictureUrl: string, hint:string, x:number, y:number }) {
   const { guess, setGuess, zoom, guessCount, status, handleSubmit } = useGameLogic(city)
+  const [showModal, setShowModal] = useState(status === "won")
+
+  useEffect(() => {
+    if (status === "won") setShowModal(true)
+  }, [status])
 
   return (
     <>
-      {status === "won" && (
+      {showModal && (
         <WinModal
           city={city}
           guessCount={guessCount}
+          onClose={() => setShowModal(false)}
         />
       )}
 
@@ -48,8 +55,8 @@ function GameInner({ city, pictureUrl, hint, x, y }: { city: string; pictureUrl:
 
 
         <div className="flex my-3 gap-x-3">
-          <UserInput value={guess} onChange={setGuess} onEnter={handleSubmit} />
-          <ValidateButton onClick={handleSubmit} disabled={!guess.trim()} />
+          <UserInput value={guess} onChange={setGuess} onEnter={handleSubmit}  />
+          <ValidateButton onClick={handleSubmit} disabled={!guess.trim() || status !== "won" } />
         </div>
 
         
