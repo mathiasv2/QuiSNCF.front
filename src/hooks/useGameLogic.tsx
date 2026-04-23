@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { usePlayer } from "./useCookies"
+import { useCookiePlayer } from "./useCookies"
 
 const ZOOM_LEVELS = [1000, 600, 550, 500, 450, 400, 350, 300, 250, 200, 150, 120, 100]
 const MAX_ATTEMPTS = ZOOM_LEVELS.length - 1
@@ -7,7 +7,7 @@ const MAX_ATTEMPTS = ZOOM_LEVELS.length - 1
 export type GameStatus = "playing" | "won"
 
 export function useGameLogic(cityAnswer: string) {
-  const { player, initPlayer, saveResult } = usePlayer();
+  const { player, initPlayer, saveResult } = useCookiePlayer();
 
   const [guessCount, setGuessCount] = useState<number>(
     () => player?.result?.tries ?? 0

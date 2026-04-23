@@ -32,35 +32,24 @@ function GameInner({ city, pictureUrl, hint, x, y }: { city: string; pictureUrl:
   return (
     <>
       {showModal && (
-        <WinModal
-          city={city}
-          guessCount={guessCount}
-          onClose={() => setShowModal(false)}
-        />
+        <WinModal city={city} guessCount={guessCount} onClose={() => setShowModal(false)} />
       )}
 
-      <div className="flex flex-col items-center rounded-4xl bg-parme py-4 px-20">
-        <div className="flex">
-        <p className="font-semibold text-3xl text-center text-aubergine pt-6">
+      <div className="flex flex-col items-center w-full max-w-xl rounded-2xl md:rounded-4xl bg-parme py-4 px-10 md:px-20">
+        <p className="font-semibold text-xl md:text-3xl text-center text-aubergine pt-4 md:pt-6">
           Devinez la gare du jour
-        </p>     
-        </div>
+        </p>
 
-
-        <div className="py-9 flex flex-col gap-y-3">
+        <div className="py-6 md:py-9 flex flex-col gap-y-3 w-full items-center">
           <StationImage src={`${pictureUrl}.jpg`} zoom={zoom} status={status} x={x} y={y} />
-          <HintButton hint={hint} tries={guessCount}/>
+          <HintButton hint={hint} tries={guessCount} />
         </div>
 
-
-
-        <div className="flex my-3 gap-x-3">
-          <UserInput value={guess} onChange={setGuess} onEnter={handleSubmit}  />
-          <ValidateButton onClick={handleSubmit} disabled={!guess.trim() || status !== "won" } />
+        <div className="flex w-full my-3 gap-x-3 px-1">
+          <UserInput value={guess} onChange={setGuess} onEnter={handleSubmit} />
+          <ValidateButton onClick={handleSubmit} disabled={!guess.trim() || status === "won"} />
         </div>
-
-        
-      </div>     
+      </div>
     </>
   )
 }

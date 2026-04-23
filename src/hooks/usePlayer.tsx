@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { postPlayer } from "../services/playerService"
 import type { Player } from "../models/player"
 

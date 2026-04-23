@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { usePostPlayer } from "../hooks/usePlayer"
+import { useCookiePlayer } from "../hooks/useCookies"
 
 interface Props {
   city: string
@@ -22,9 +23,13 @@ function computeScore(guessCount: number) {
 
 export function WinModal({ city, guessCount, onClose }: Props) {
   const [pseudo, setPseudo] = useState("")
-  const [saved, setSaved] = useState(false)
   const [visible, setVisible] = useState(false)
   const { submit } = usePostPlayer()
+  const { player, saveScoreRegistered } = useCookiePlayer()
+  const [saved, setSaved] = useState(player?.scoreRegistered ?? false)
+
+  
+
   
 
   const score = computeScore(guessCount)
@@ -39,7 +44,9 @@ export function WinModal({ city, guessCount, onClose }: Props) {
 
     if (!pseudo.trim()) return
     console.log
-    await submit({ name: pseudo.trim(), tries: guessCount, multiplier: guessCount })
+    await submit({ name: pseudo.trim(), tries: guessCount })
+    console.log(guessCount)
+    saveScoreRegistered()
     setSaved(true)
   }
 
@@ -113,7 +120,6 @@ export function WinModal({ city, guessCount, onClose }: Props) {
             onClick={onClose}
             className="absolute top-3 right-4 text-white/30 hover:text-white/70 text-xl transition-colors"
             aria-label="Fermer"
-
         >
           ✕
         </button>
