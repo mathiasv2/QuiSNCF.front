@@ -55,7 +55,7 @@ export function WinModal({ city, guessCount }: Props) {
       <div
         className={`
           relative flex flex-col items-center gap-6
-          bg-blue-900/90 border-2 border-white/20
+          bg-lavande/90 border-2 border-white/20
           rounded-2xl px-10 py-10 shadow-2xl w-full max-w-sm mx-4
           transition-all duration-500
           ${visible ? "scale-100 opacity-100 translate-y-0" : "scale-90 opacity-0 translate-y-4"}
@@ -82,7 +82,7 @@ export function WinModal({ city, guessCount }: Props) {
 
         {!saved ? (
           <div className="flex flex-col items-center gap-3 w-full">
-            <p className="text-white/70 text-sm">Enregistre ton score</p>
+            <p className="text-white/70 text-sm text-center">Enregistrez votre score avec le même pseudo chaque jour</p>
             <div className="flex gap-2 w-full">
               <input
                 type="text"

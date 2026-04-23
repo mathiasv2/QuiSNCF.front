@@ -7,14 +7,18 @@ interface Props {
 
 export function HintButton({ hint, tries }: Props) {
   const [visible, setVisible] = useState(false)
+  const disabled = tries < 3;
 
   return (
     <div className="flex flex-col items-center gap-2">
       <button
         onClick={() => setVisible(!visible)}
-        className="py-2 px-5 rounded-full bg-amber-500 hover:bg-amber-400 active:scale-95 text-white text-sm font-medium transition-all duration-150"
+        className="py-2 px-5 rounded-full bg-amber-500 hover:bg-amber-400 active:scale-95 text-white text-sm font-medium transition-all duration-150
+        disabled:bg-gray-400 disabled:text-amber-50
+        "
+        disabled={disabled}
       >
-        {visible ? "Masquer l'indice" : "Voir l'indice"}
+      {disabled ? `Indice dans ${3 - tries} essais` : visible ? "Masquer l'indice" : "Voir l'indice"}
       </button>
 
       <p className={`text-sm text-amber-600 text-center max-w-xs ${visible ? "" : "invisible"}`}>
