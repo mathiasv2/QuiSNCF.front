@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="fixed bottom-2 w-full flex justify-center">
+    <footer className="w-full flex justify-center py-3">
       <div className="flex items-center gap-2">
         
         <a href="https://www.linkedin.com/in/mathias-dumas-conceptdev/" target="_blank" rel="noreferrer">

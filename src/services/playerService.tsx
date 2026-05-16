@@ -15,7 +15,7 @@ export const postPlayer = async (player: Player): Promise<boolean> => {
 }
 
 
-export const getBillboard = async (): Promise<Player | null> => {
+export const getBillboard = async (): Promise<Player[]> => {
   const response = await api.get("player/getBillboard")
   return response.data;
 }
