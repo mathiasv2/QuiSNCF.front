@@ -4,6 +4,7 @@ import { HomePage } from './pages/homePage'
 import { CookiesProvider } from 'react-cookie'
 import { Footer } from './components/footer'
 import { LeaderboardPage } from './pages/leaderboardPage'
+import { NotFound } from './pages/notFoundPage'
 
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
             <Route path='/' element={<HomePage/>}/>
             <Route path='/game' element={<GamePage/>}/>
             <Route path='/leaderboard' element={<LeaderboardPage/>}/>
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
         <Footer/>
