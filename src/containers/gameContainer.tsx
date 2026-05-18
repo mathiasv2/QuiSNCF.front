@@ -45,7 +45,7 @@ function GameInner({ city, pictureUrl, hint, x, y }: { city: string; pictureUrl:
           <HintButton hint={hint} tries={guessCount} />
         </div>
 
-        <div className="flex w-full my-3 gap-x-3 px-1">
+        <div className="flex w-full mb-3 gap-x-1 px-1">
           <UserInput value={guess} onChange={setGuess} onEnter={handleSubmit} />
           <ValidateButton onClick={handleSubmit} disabled={!guess.trim() || status === "won"} />
         </div>

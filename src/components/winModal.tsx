@@ -13,7 +13,7 @@ const SCORE_LABELS = [
     { min: 4000, label: "Conducteur de train",     emoji: "⭐",  color: "text-blue-200"   },
     { min: 3000, label: "Agent de terrain",  emoji: "👍",  color: "text-green-300"  },
     { min: 2000,  label: "Voyageur",    emoji: "😅",  color: "text-orange-300" },
-    { min: 1000,  label: "Pigeon de gare",    emoji: "😅",  color: "text-brown-300" },
+     { min: 1000,  label: "Pigeon de gare",    emoji: "😅",  color: "text-brown-300" },
     { min: 0,  label: "Joueur de diabolo",    emoji: "😅",  color: "text-black" },
 ]
 
