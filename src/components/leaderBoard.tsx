@@ -16,7 +16,7 @@ export function LeaderBoard() {
   const [first, ...rest] = billboard.slice(0, 20)
 
   return (
-    <div className="flex flex-col items-center gap-5 w-full max-w-md mx-auto px-4">
+    <div className="flex flex-col items-center gap-5 max-w-md mx-auto px-4">
       {first && <BestLeaderboard name={first.name} score={first.score} />}
 
       <div className="w-full rounded-2xl bg-parme border border-amber-500/30 overflow-hidden">
