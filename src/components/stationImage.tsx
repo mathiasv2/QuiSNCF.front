@@ -19,7 +19,7 @@ export function StationImage({ src, zoom, status, x, y }: Props) {
 
   return (
     <div
-      className="w-full max-w-[16rem] h-64 md:w-64 rounded-xl transition-all duration-700 border-white border-2 bg-no-repeat bg-white"
+      className="w-full max-w-[16rem] h-64 md:w-64 rounded-xl transition-all duration-700 border-white border-2 bg-no-repeat bg-parme"
       style={{
         backgroundImage: `url(${src})`,
         backgroundSize: won ? "contain" : `${zoom}%`,

@@ -10,7 +10,7 @@ import { NotFound } from './pages/notFoundPage'
 export default function App() {
   return (
    <CookiesProvider>
-      <div className="bg-[url(src/assets/identites_0.jpg.webp)] bg-fixed bg-no-repeat bg-cover bg-center min-h-screen flex flex-col">
+      <div className="bg-[url(src/assets/identites_0.jpg.webp)] md:bg-fixed bg-no-repeat bg-cover bg-center min-h-screen flex flex-col">
         <div className="flex justify-center">
           <a href='/'>
             <img src="src/assets/dle1.png" className="text-amber-200 h-36 md:h-52 py-2 md:py-6" />
