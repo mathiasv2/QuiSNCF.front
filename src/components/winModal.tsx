@@ -44,7 +44,7 @@ export function WinModal({ city, guessCount, onClose }: Props) {
 
     if (!pseudo.trim()) return
     console.log
-    await submit({ name: pseudo.trim(), tries: guessCount })
+    await submit({ name: pseudo.trim(), tries: guessCount, score: score })
     console.log(guessCount)
     saveScoreRegistered()
     setSaved(true)
