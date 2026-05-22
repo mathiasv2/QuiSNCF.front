@@ -18,7 +18,7 @@ export function GameContainer() {
     <p className="text-red-400 text-center">{error ?? "Aucune station disponible"}</p>
   )
 
-  return <GameInner city={station.city} pictureUrl={station.pictureUrl} hint={station.hint} x={station.x} y={station.y}/>
+  return <GameInner city={station.city} pictureUrl={station.pictureUrl} hint={station.hint} x={station.randomX} y={station.randomY}/>
 }
 
 function GameInner({ city, pictureUrl, hint, x, y }: { city: string; pictureUrl: string, hint:string, x:number, y:number }) {
