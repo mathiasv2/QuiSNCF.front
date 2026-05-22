@@ -40,7 +40,7 @@ function GameInner({ city, pictureUrl, hint, x, y }: { city: string; pictureUrl:
         </p>
 
         <div className="py-6 md:py-9 flex flex-col gap-y-3 w-full items-center">
-          <StationImage src={`./gares/${pictureUrl}.jpg`} zoom={zoom} status={status} x={x} y={y}/>
+          <StationImage src={`/gares/${pictureUrl}.jpg`} zoom={zoom} status={status} x={x} y={y}/>
           <HintButton hint={hint} tries={guessCount} />
         </div>
 
