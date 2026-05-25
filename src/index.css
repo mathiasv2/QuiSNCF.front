@@ -49,3 +49,8 @@ body {
   min-height: 100%;
   overscroll-behavior: none;
 }
+
+html, body {
+  background-color: #011152;
+  overscroll-behavior: none;
+}
