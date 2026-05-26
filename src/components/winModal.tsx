@@ -23,12 +23,13 @@ function computeScore(guessCount: number) {
 
 
 export function WinModal({ city, guessCount, onClose }: Props) {
-  const [pseudo, setPseudo] = useState("")
   const [visible, setVisible] = useState(false)
   const { submit } = usePostPlayer()
-  const { player, saveScoreRegistered } = useCookiePlayer()
+  const { player, saveScoreRegistered, savedPseudo, savePseudo } = useCookiePlayer()
   const [saved, setSaved] = useState(player?.scoreRegistered ?? false)
   const [error, setError] = useState("")
+    const [pseudo, setPseudo] = useState(savedPseudo ?? "")  
+
   
   const isValidPseudo = (name: string) => /^[a-zA-Z0-9_\-éèêëàâùûüîïôçœæ ]+$/.test(name)
 
@@ -41,13 +42,14 @@ export function WinModal({ city, guessCount, onClose }: Props) {
     return () => clearTimeout(t)
   }, [])
 
-  const handleSave = async () => {
+   const handleSave = async () => {
     if (!pseudo.trim()) return
     if (!isValidPseudo(pseudo.trim())) {
       setError("Pseudo invalide : lettres, chiffres et _ - autorisés")
       return
     }
     setError("")
+    savePseudo(pseudo.trim())
     await submit({ name: pseudo.trim(), tries: guessCount, score: 0 })
     saveScoreRegistered()
     setSaved(true)
@@ -110,7 +112,7 @@ export function WinModal({ city, guessCount, onClose }: Props) {
                 className="flex-1 py-2 px-4 rounded-full border-2 border-white/20 bg-white/10 text-white placeholder-white/30 outline-none focus:border-white/50 transition-all text-base"
               />
               <button
-                onClick={handleSave}
+                onClick={(handleSave)}
                 disabled={!pseudo.trim()}
                 className="bg-white text-blue-900 font-bold py-2 px-5 rounded-full text-sm hover:bg-blue-100 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
               >
