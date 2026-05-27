@@ -13,7 +13,7 @@ export function LeaderBoard() {
   if (loading) return <p className="text-center text-white/60 py-10">Chargement...</p>
   if (error)   return <p className="text-center text-red-400 py-10">{error}</p>
 
-  const [first, ...rest] = billboard.slice(0, 20)
+  const [first, ...rest] = billboard.slice(0, 50)
 
   return (
     <div className="flex flex-col items-center gap-5 max-w-md mx-auto px-4">
