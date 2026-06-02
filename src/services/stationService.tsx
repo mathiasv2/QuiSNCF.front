@@ -3,7 +3,6 @@ import type { Station } from "../models/station"
 
 export const getRandomStation = async (): Promise<Station | null> => {
     const response = await api.get(`station/todaysStation`)
-    console.log("API response:", response.data)  
     return response.data
 }
 

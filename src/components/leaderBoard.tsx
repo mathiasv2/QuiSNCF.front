@@ -23,7 +23,7 @@ export function LeaderBoard() {
         <div className="px-5 py-3.5 border-b border-amber-500/20 flex items-center justify-between">
           <span className="text-aubergine font-bold text-sm tracking-wide">Classement</span>
           <span className="text-amber-600/60 text-[10px] font-semibold uppercase tracking-[0.15em]">
-            Top {billboard.length}
+            Top 50
           </span>
         </div>
 
