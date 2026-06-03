@@ -112,7 +112,7 @@ export function WinModal({ city, guessCount, onClose, gametype }: Props) {
                     e.target.scrollIntoView({ behavior: "smooth", block: "center" })
                   }, 300)
                 }}
-                placeholder="Ton pseudo…"
+                placeholder="Votre pseudo…"
                 maxLength={20}
                 className="flex-1 py-2 px-4 rounded-full border-2 border-white/20 bg-white/10 text-white placeholder-white/30 outline-none focus:border-white/50 transition-all text-base"
               />

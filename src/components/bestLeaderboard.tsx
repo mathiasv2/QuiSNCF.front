@@ -1,26 +1,99 @@
 interface Props {
-  name: string
-  score: number
-  style: string
+  name: string;
+  score: number;
+  style: string;
+  emoji: string;
+  title: string;
 }
 
-export function BestLeaderboard({ name, score, style }: Props) {
+export function BestLeaderboard({
+  name,
+  score,
+  style,
+  emoji,
+  title,
+}: Props) {
   return (
-    <div className={`relative w-full rounded-2xl ${style} border-2 border-amber-400/60 px-8 py-7 flex flex-col items-center gap-1.5 overflow-hidden
-      before:content-[''] before:absolute before:top-0 before:left-[15%] before:right-[15%] before:h-px before:bg-linear-to before:from-transparent before:via-amber-400/80 before:to-transparent
-      after:content-[''] after:absolute after:bottom-0 after:left-[15%] after:right-[15%] after:h-px after:bg-linear-to after:from-transparent after:via-amber-400/80 after:to-transparent`}>
+    <div
+      className={`
+        relative
+        w-full
+        overflow-hidden
+        rounded-3xl
+        border-2
+        border-amber-300
+        px-8
+        py-7
+        flex
+        flex-col
+        items-center
+        gap-2
 
-      <div className="relative mb-1">
-        <span className="absolute -bottom-1 -right-1 text-lg leading-none">🏆</span>
+        shadow-[0_0_20px_rgba(251,191,36,0.35)]
+        ${style}
+      `}
+    >
+
+
+      <div className="relative mb-2">
+        <div className="absolute inset-0 scale-150 rounded-full bg-yellow-300/40 blur-xl animate-pulse" />
+
+        <span className="relative text-6xl drop-shadow-[0_0_20px_rgba(251,191,36,0.9)] animate-bounce">
+          {emoji}
+        </span>
       </div>
 
-      <p className="text-amber-600 text-[10px] font-semibold tracking-[0.2em] uppercase">Meilleur score</p>
-      <p className="text-aubergine font-bold text-2xl tracking-tight">{name}</p>
+      <div
+        className="
+          rounded-full
+          bg-linear-to-r
+          from-yellow-300
+          via-amber-400
+          to-yellow-300
+          px-4
+          py-1
+          shadow-lg
+        "
+      >
+        <p className="text-[10px] font-black tracking-[0.25em] uppercase text-amber-950">
+          {title}
+        </p>
+      </div>
 
-      <div className="flex items-baseline gap-1.5 rounded-full bg-amber-400/15 border border-amber-400/40 px-5 py-1.5 mt-1">
-        <span className="text-amber-600 font-bold text-lg tabular-nums">{score.toLocaleString()}</span>
-        <span className="text-amber-600/50 text-xs font-medium">pts</span>
+      <p className={`${style} font-bold text-3xl tracking-tight`}>{name}</p>
+
+      <div
+        className="
+          mt-2
+          flex
+          items-baseline
+          gap-2
+
+          rounded-full
+          border
+          border-amber-300
+
+          bg-linear-to-r
+          from-yellow-400/20
+          via-yellow-200/30
+          to-yellow-400/20
+
+          px-6
+          py-2
+
+          shadow-[0_0_15px_rgba(251,191,36,0.35)]
+        "
+      >
+        <span className="text-2xl font-black text-amber-500 tabular-nums">
+          {score.toLocaleString()}
+        </span>
+
+        <span className="text-xs font-bold uppercase tracking-wider text-amber-600">
+          pts
+        </span>
       </div>
     </div>
-  )
+  );
 }
+
+
