@@ -1,15 +1,20 @@
 import { useEffect, useState, useCallback } from "react"
-import { GameSkeleton } from "../components/gameSkeleton"
-import { useRandomWord } from "../hooks/useWord"
 import { useWordleLogic } from "../hooks/useWordleLogic"
+import { type WordleState, type GuessRow, type GameStatus } from "../models/wordleTypes"
 import { WordleGrid } from "../components/wordleGrid"
 import { WordleKeyboard } from "../components/wordleKeyboard"
+import { GameSkeleton } from "../components/gameSkeleton"
+import { useCookiePlayer } from "../hooks/useCookies"
+import { useRandomWord } from "../hooks/useWord"
 import { WinModal } from "../components/winModal"
 import { GameType } from "../enums/gameType"
 
 
 export function WordleGameContainer() {
   const { word, definition, loading, error } = useRandomWord()
+  const { player, initPlayer } = useCookiePlayer()
+
+  useEffect(() => { initPlayer() }, [])
 
   if (loading) return <GameSkeleton />
   if (error || !word || !definition) {
@@ -20,42 +25,60 @@ export function WordleGameContainer() {
     )
   }
 
-  return <WordleGameInner word={word} definition={definition} />
+  const savedState: WordleState | undefined = player?.wordleState ?? undefined
+
+  return <WordleGameInner word={word} definition={definition} savedState={savedState} />
 }
 
 
-function WordleGameInner({word, definition}: {
+function WordleGameInner({
+  word,
+  definition,
+  savedState,
+}: {
   word: string
   definition: string
+  savedState?: WordleState
 }) {
+  const {
+    player,
+    saveResult,
+    saveWordleState,
+  } = useCookiePlayer()
+
   const {
     WORD_LEN,
     MAX_TRIES,
     guesses,
     currentGuess,
-    setCurrentGuess,
     status,
     errorMessage,
     submitGuess,
     addLetter,
     deleteLetter,
     letterStatuses,
-  } = useWordleLogic(word)
+  } = useWordleLogic(word, savedState)
 
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(
+    savedState?.status === "won" && !player?.scoreRegistered
+  )
   const [shake, setShake] = useState(false)
-  const [showDef, setShowDef] = useState(false)
+  const [showDef, setShowDef] = useState(
+    savedState?.status === "won" || savedState?.status === "lost"
+  )
 
   useEffect(() => {
     if (status === "won") {
       setShowDef(true)
+      saveResult({ won: true, tries: guesses.length })
       const t = setTimeout(() => setShowModal(true), WORD_LEN * 120 + 600)
       return () => clearTimeout(t)
     }
     if (status === "lost") {
       setShowDef(true)
+      saveResult({ won: false, tries: guesses.length })
     }
-  }, [status, WORD_LEN])
+  }, [status])
 
   useEffect(() => {
     if (errorMessage) {
@@ -65,20 +88,23 @@ function WordleGameInner({word, definition}: {
     }
   }, [errorMessage])
 
+  const handleSubmit = useCallback(() => {
+    const result = submitGuess() as any
+    if (!result) return
+    const newGuesses: GuessRow[] = result._newGuesses
+    const newStatus: GameStatus = result._newStatus
+    saveWordleState({ guesses: newGuesses, status: newStatus })
+  }, [submitGuess, saveWordleState])
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (status !== "playing") return
       if (e.ctrlKey || e.altKey || e.metaKey) return
-
-      if (e.key === "Enter") {
-        submitGuess()
-      } else if (e.key === "Backspace") {
-        deleteLetter()
-      } else if (/^[a-zA-ZÀ-ÿ]$/.test(e.key)) {
-        addLetter(e.key.toUpperCase())
-      }
+      if (e.key === "Enter") handleSubmit()
+      else if (e.key === "Backspace") deleteLetter()
+      else if (/^[a-zA-ZÀ-ÿ]$/.test(e.key)) addLetter(e.key.toUpperCase())
     },
-    [status, submitGuess, deleteLetter, addLetter]
+    [status, handleSubmit, deleteLetter, addLetter]
   )
 
   useEffect(() => {
@@ -91,14 +117,8 @@ function WordleGameInner({word, definition}: {
 
   return (
     <>
-    
-    {showModal && (
-        <WinModal
-          city={word}
-          guessCount={guesses.length - 1}
-          onClose={() => setShowModal(false)}
-          gametype={GameType.Word}
-        />
+      {showModal && (
+        <WinModal city={word} guessCount={guesses.length - 1} onClose={() => setShowModal(false)} gametype={GameType.Word} />
       )}
 
       <div className="flex flex-col items-center w-full max-w-lg rounded-2xl md:rounded-4xl bg-parme py-4 px-4 md:px-10">
@@ -144,12 +164,12 @@ function WordleGameInner({word, definition}: {
           )}
         </div>
 
-       
+      
         <WordleKeyboard
           letterStatuses={statuses}
           onKey={addLetter}
           onDelete={deleteLetter}
-          onSubmit={submitGuess}
+          onSubmit={handleSubmit}
           disabled={gameOver}
         />
       </div>
@@ -162,11 +182,11 @@ function LegendItem({ type, label }: { type: "correct" | "present" | "absent"; l
   const dot: Record<string, string> = {
     correct: "bg-emerald-700",
     present: "bg-amber-600",
-    absent: "bg-neutral-500",
+    absent:  "bg-neutral-500",
   }
   return (
     <span className="flex items-center gap-1.5">
-      <span className={`relative w-3.5 h-3.5 rounded-sm ${dot[type]} shrink-0`}>
+      <span className={`relative w-3.5 h-3.5 rounded-sm ${dot[type]} flex-shrink-0`}>
         {type === "correct" && (
           <span className="absolute bottom-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-white/40" />
         )}
