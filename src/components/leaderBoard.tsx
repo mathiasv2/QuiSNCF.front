@@ -42,7 +42,7 @@ export function LeaderboardList({ billboard, style }: Props) {
                 className={`flex items-center gap-2.5 px-4 py-2.5 transition-colors duration-150
                   ${isMedal ? "bg-amber-400/[0.07]" : "hover:bg-amber-400/4"}`}
               >
-                <div className={`w-5/5 h-5.5 rounded-full border flex items-center justify-center text-[10px] font-bold tabular-nums flex-shrink-0 ${rankClass}`}>
+                <div className={`w-5.5 h-5.5 rounded-full border flex items-center justify-center text-[10px] font-bold tabular-nums flex-shrink-0 ${rankClass}`}>
                   {rank}
                 </div>
                 <span className="flex-1 text-aubergine font-medium text-sm truncate">{player.name}</span>
