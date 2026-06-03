@@ -8,7 +8,7 @@ interface WordleGridProps {
   shake: boolean
 }
 
-function getTileClass(status?: LetterStatus, isRevealing?: boolean): string {
+function getTileClass(status?: LetterStatus): string {
   const base =
     "flex items-center justify-center font-bold uppercase text-xl md:text-2xl rounded-lg border-2 transition-colors relative select-none"
 

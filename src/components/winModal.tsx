@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react"
 import { usePostPlayer } from "../hooks/usePlayer"
 import { useCookiePlayer } from "../hooks/useCookies"
+import type { GameType } from "../enums/gameType"
 
 interface Props {
   city: string
   guessCount: number
   onClose: () => void
+  gametype: GameType
 }
 
 const SCORE_LABELS = [
@@ -52,7 +54,7 @@ function computeScore(guessCount: number) {
 }
 
 
-export function WinModal({ city, guessCount, onClose }: Props) {
+export function WinModal({ city, guessCount, onClose, gametype }: Props) {
   const [visible, setVisible] = useState(false)
   const { submit } = usePostPlayer()
   const { player, saveScoreRegistered, savedPseudo, savePseudo } = useCookiePlayer()
@@ -80,7 +82,7 @@ export function WinModal({ city, guessCount, onClose }: Props) {
     }
     setError("")
     savePseudo(pseudo.trim())
-    await submit({ name: pseudo.trim(), tries: guessCount + 1, score: 0 })
+    await submit({ name: pseudo.trim(), tries: guessCount + 1, score: 0, gameType: gametype})
     saveScoreRegistered()
     setSaved(true)
   }

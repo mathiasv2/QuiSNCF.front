@@ -7,6 +7,7 @@ import { UserInput } from "../components/userInput.tsx"
 import { WinModal } from "../components/winModal"
 import { HintButton } from "../components/hintButton.tsx"
 import { useEffect, useState } from "react"
+import { GameType } from "../enums/gameType.tsx"
 
 
 export function GameContainer() {
@@ -31,7 +32,7 @@ function GameInner({ city, pictureUrl, hint, x, y }: { city: string; pictureUrl:
   return (
     <>
       {showModal && (
-        <WinModal city={city} guessCount={guessCount} onClose={() => setShowModal(false)} />
+        <WinModal city={city} guessCount={guessCount} onClose={() => setShowModal(false)} gametype={GameType.Station} />
       )}
 
       <div className="flex flex-col items-center w-full max-w-xl rounded-2xl md:rounded-4xl bg-parme py-4 px-10 md:px-20">

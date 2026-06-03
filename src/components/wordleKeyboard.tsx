@@ -18,8 +18,6 @@ function getKeyClass(letter: string, status?: LetterStatus): string {
   const base =
     "flex items-center justify-center rounded-lg font-semibold text-sm cursor-pointer select-none transition-all active:scale-95 border"
 
-  const special = letter === "ENTRÉE" || letter === "⌫"
-
   if (!status) {
     return `${base} bg-white/60 border-aubergine/20 text-aubergine hover:bg-white/80`
   }

@@ -5,6 +5,7 @@ import { useWordleLogic } from "../hooks/useWordleLogic"
 import { WordleGrid } from "../components/wordleGrid"
 import { WordleKeyboard } from "../components/wordleKeyboard"
 import { WinModal } from "../components/winModal"
+import { GameType } from "../enums/gameType"
 
 
 export function WordleGameContainer() {
@@ -96,6 +97,7 @@ function WordleGameInner({word, definition}: {
           city={word}
           guessCount={guesses.length - 1}
           onClose={() => setShowModal(false)}
+          gametype={GameType.Word}
         />
       )}
 

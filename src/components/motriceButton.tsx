@@ -4,7 +4,7 @@ export function MotriceButton() {
       className="
         relative
         w-32
-        aspect-[2470/1284]
+        aspect-2470/1284
         cursor-pointer
         transition-transform
         duration-200

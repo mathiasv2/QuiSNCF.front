@@ -6,8 +6,8 @@ interface Props {
 export function BestLeaderboard({ name, score }: Props) {
   return (
     <div className="relative w-full rounded-2xl bg-parme border-2 border-amber-400/60 px-8 py-7 flex flex-col items-center gap-1.5 overflow-hidden
-      before:content-[''] before:absolute before:top-0 before:left-[15%] before:right-[15%] before:h-px before:bg-gradient-to-r before:from-transparent before:via-amber-400/80 before:to-transparent
-      after:content-[''] after:absolute after:bottom-0 after:left-[15%] after:right-[15%] after:h-px after:bg-gradient-to-r after:from-transparent after:via-amber-400/80 after:to-transparent">
+      before:content-[''] before:absolute before:top-0 before:left-[15%] before:right-[15%] before:h-px before:bg-linear-to before:from-transparent before:via-amber-400/80 before:to-transparent
+      after:content-[''] after:absolute after:bottom-0 after:left-[15%] after:right-[15%] after:h-px after:bg-linear-to after:from-transparent after:via-amber-400/80 after:to-transparent">
 
       <div className="relative mb-1">
         <span className="absolute -bottom-1 -right-1 text-lg leading-none">🏆</span>
