@@ -6,13 +6,13 @@ import { WordleKeyboard } from "../components/wordleKeyboard"
 import { GameSkeleton } from "../components/gameSkeleton"
 import { useCookiePlayer } from "../hooks/useCookies"
 import { useRandomWord } from "../hooks/useWord"
-import { WinModal } from "../components/winModal"
 import { GameType } from "../enums/gameType"
+import { WinModal } from "../components/winModal"
 
 
 export function WordleGameContainer() {
   const { word, definition, loading, error } = useRandomWord()
-  const { player, initPlayer } = useCookiePlayer()
+  const { gameData, initPlayer } = useCookiePlayer("wordle")
 
   useEffect(() => { initPlayer() }, [])
 
@@ -25,7 +25,7 @@ export function WordleGameContainer() {
     )
   }
 
-  const savedState: WordleState | undefined = player?.wordleState ?? undefined
+  const savedState: WordleState | undefined = gameData?.wordleState ?? undefined
 
   return <WordleGameInner word={word} definition={definition} savedState={savedState} />
 }
@@ -41,16 +41,20 @@ function WordleGameInner({
   savedState?: WordleState
 }) {
   const {
-    player,
+    gameData,
     saveResult,
+    saveScoreRegistered,
     saveWordleState,
-  } = useCookiePlayer()
+    savedPseudo,
+    savePseudo,
+  } = useCookiePlayer("wordle")
 
   const {
     WORD_LEN,
     MAX_TRIES,
     guesses,
     currentGuess,
+    setCurrentGuess,
     status,
     errorMessage,
     submitGuess,
@@ -60,7 +64,7 @@ function WordleGameInner({
   } = useWordleLogic(word, savedState)
 
   const [showModal, setShowModal] = useState(
-    savedState?.status === "won" && !player?.scoreRegistered
+    savedState?.status === "won" && !gameData?.scoreRegistered
   )
   const [shake, setShake] = useState(false)
   const [showDef, setShowDef] = useState(
@@ -164,7 +168,33 @@ function WordleGameInner({
           )}
         </div>
 
-      
+        <div className="hidden md:flex w-full gap-x-2 px-1 mb-2">
+          <input
+            type="text"
+            value={currentGuess}
+            disabled={gameOver}
+            aria-label="Entrez votre réponse"
+            placeholder={`${WORD_LEN} lettres…`}
+            maxLength={WORD_LEN}
+            onChange={(e) => {
+              const val = e.target.value
+                .toUpperCase()
+                .replace(/[^A-ZÀÂÄÉÈÊËÎÏÔÙÛÜÇ]/gi, "")
+                .slice(0, WORD_LEN)
+              setCurrentGuess(val)
+            }}
+            onKeyDown={(e) => { if (e.key === "Enter") handleSubmit() }}
+            className="flex-1 py-2 px-4 rounded-xl border-2 border-aubergine/20 bg-white/60 text-aubergine placeholder-aubergine/40 font-semibold uppercase tracking-widest text-center focus:outline-none focus:border-aubergine/60 transition-colors disabled:opacity-40"
+          />
+          <button
+            onClick={handleSubmit}
+            disabled={!currentGuess.trim() || gameOver}
+            className="bg-aubergine text-white font-semibold px-5 py-2 rounded-xl hover:opacity-90 active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            Valider
+          </button>
+        </div>
+
         <WordleKeyboard
           letterStatuses={statuses}
           onKey={addLetter}
@@ -177,6 +207,7 @@ function WordleGameInner({
   )
 }
 
+// ─── Légende ────────────────────────────────────────────────────────────────
 
 function LegendItem({ type, label }: { type: "correct" | "present" | "absent"; label: string }) {
   const dot: Record<string, string> = {

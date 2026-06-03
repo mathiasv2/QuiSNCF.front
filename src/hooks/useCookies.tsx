@@ -11,37 +11,66 @@ TODAY.setHours(23, 59, 59, 0)
 const ONE_YEAR = new Date()
 ONE_YEAR.setFullYear(ONE_YEAR.getFullYear() + 1)
 
-export function useCookiePlayer() {
+export type GameType = "station" | "wordle"
+
+export function useCookiePlayer(gameType: GameType) {
   const [cookies, setCookie] = useCookies([COOKIE_NAME, COOKIE_PSEUDO])
 
   const player = cookies[COOKIE_NAME] ?? null
   const savedPseudo = cookies[COOKIE_PSEUDO] ?? null
+
+  const gameData = player?.[gameType] ?? null
 
   const initPlayer = () => {
     if (player) return
     setCookie(COOKIE_NAME, {
       id: uuidv4(),
       createdAt: new Date().toISOString(),
-      result: null,
-      wordleState: null,
+    }, { path: "/", expires: TODAY })
+  }
+
+  const saveResult = ({ won, tries }: { won: boolean; tries: number }) => {
+    setCookie(COOKIE_NAME, {
+      ...player,
+      [gameType]: {
+        ...gameData,
+        result: { won, tries },
+      },
     }, { path: "/", expires: TODAY })
   }
 
   const saveScoreRegistered = () => {
-    setCookie(COOKIE_NAME, { ...player, scoreRegistered: true }, { path: "/", expires: TODAY })
-  }
-
-  const saveResult = ({ won, tries }: { won: boolean; tries: number }) => {
-    setCookie(COOKIE_NAME, { ...player, result: { won, tries } }, { path: "/", expires: TODAY })
+    setCookie(COOKIE_NAME, {
+      ...player,
+      [gameType]: {
+        ...gameData,
+        scoreRegistered: true,
+      },
+    }, { path: "/", expires: TODAY })
   }
 
   const saveWordleState = (state: WordleState) => {
-    setCookie(COOKIE_NAME, { ...player, wordleState: state }, { path: "/", expires: TODAY })
+    setCookie(COOKIE_NAME, {
+      ...player,
+      [gameType]: {
+        ...gameData,
+        wordleState: state,
+      },
+    }, { path: "/", expires: TODAY })
   }
 
   const savePseudo = (pseudo: string) => {
     setCookie(COOKIE_PSEUDO, pseudo, { path: "/", expires: ONE_YEAR })
   }
 
-  return { player, initPlayer, saveResult, saveScoreRegistered, saveWordleState, savedPseudo, savePseudo }
+  return {
+    player,
+    gameData,
+    initPlayer,
+    saveResult,
+    saveScoreRegistered,
+    saveWordleState,
+    savedPseudo,
+    savePseudo,
+  }
 }
