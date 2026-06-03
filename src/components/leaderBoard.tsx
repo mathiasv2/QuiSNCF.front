@@ -40,13 +40,13 @@ export function LeaderboardList({ billboard, style }: Props) {
               <li
                 key={player.name}
                 className={`flex items-center gap-2.5 px-4 py-2.5 transition-colors duration-150
-                  ${isMedal ? "bg-amber-400/[0.07]" : "hover:bg-amber-400/[0.04]"}`}
+                  ${isMedal ? "bg-amber-400/[0.07]" : "hover:bg-amber-400/4"}`}
               >
-                <div className={`w-[22px] h-[22px] rounded-full border flex items-center justify-center text-[10px] font-bold tabular-nums flex-shrink-0 ${rankClass}`}>
+                <div className={`w-5/5 h-5.5 rounded-full border flex items-center justify-center text-[10px] font-bold tabular-nums flex-shrink-0 ${rankClass}`}>
                   {rank}
                 </div>
                 <span className="flex-1 text-aubergine font-medium text-sm truncate">{player.name}</span>
-                <div className={`flex items-baseline gap-1 rounded-full px-3 py-0.5 border flex-shrink-0
+                <div className={`flex items-baseline gap-1 rounded-full px-3 py-0.5 border shrink-0
                   ${isMedal ? "bg-amber-400/18 border-amber-400/32" : "bg-aubergine/5 border-aubergine/8"}`}>
                   <span className={`text-xs font-bold tabular-nums ${isMedal ? "text-amber-700" : "text-aubergine/60"}`}>
                     {player.score.toLocaleString()}

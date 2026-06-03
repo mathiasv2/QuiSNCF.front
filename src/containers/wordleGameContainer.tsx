@@ -43,10 +43,7 @@ function WordleGameInner({
   const {
     gameData,
     saveResult,
-    saveScoreRegistered,
     saveWordleState,
-    savedPseudo,
-    savePseudo,
   } = useCookiePlayer("wordle")
 
   const {
@@ -54,7 +51,6 @@ function WordleGameInner({
     MAX_TRIES,
     guesses,
     currentGuess,
-    setCurrentGuess,
     status,
     errorMessage,
     submitGuess,
@@ -181,7 +177,6 @@ function WordleGameInner({
   )
 }
 
-// ─── Légende ────────────────────────────────────────────────────────────────
 
 function LegendItem({ type, label }: { type: "correct" | "present" | "absent"; label: string }) {
   const dot: Record<string, string> = {
@@ -191,7 +186,7 @@ function LegendItem({ type, label }: { type: "correct" | "present" | "absent"; l
   }
   return (
     <span className="flex items-center gap-1.5">
-      <span className={`relative w-3.5 h-3.5 rounded-sm ${dot[type]} flex-shrink-0`}>
+      <span className={`relative w-3.5 h-3.5 rounded-sm ${dot[type]} shrink-0`}>
         {type === "correct" && (
           <span className="absolute bottom-0.5 right-0.5 w-1.5 h-1.5 rounded-full bg-white/40" />
         )}
