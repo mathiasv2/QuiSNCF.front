@@ -8,9 +8,10 @@ const rankBadgeClass: Record<number, string> = {
 
 interface Props {
   billboard: Player[]
+  style: string
 }
 
-export function LeaderboardList({ billboard }: Props) {
+export function LeaderboardList({ billboard, style }: Props) {
   if (billboard.length === 0) {
     return <p className="text-center text-aubergine/40 py-8 text-sm">Aucun score pour le moment.</p>
   }
@@ -19,9 +20,9 @@ export function LeaderboardList({ billboard }: Props) {
 
   return (
     <div className="flex flex-col items-center gap-5 w-full">
-      {first && <BestLeaderboard name={first.name} score={first.score} />}
+      {first && <BestLeaderboard name={first.name} score={first.score} style={style}/>}
 
-      <div className="w-full rounded-2xl bg-parme border border-amber-500/30 overflow-hidden">
+      <div className={`w-full rounded-2xl ${style} border border-amber-500/30 overflow-hidden`}>
         <div className="px-5 py-3.5 border-b border-amber-500/20 flex items-center justify-between">
           <span className="text-aubergine font-bold text-sm tracking-wide">Classement</span>
           <span className="text-amber-600/60 text-[10px] font-semibold uppercase tracking-[0.15em]">

@@ -168,33 +168,7 @@ function WordleGameInner({
           )}
         </div>
 
-        <div className="hidden md:flex w-full gap-x-2 px-1 mb-2">
-          <input
-            type="text"
-            value={currentGuess}
-            disabled={gameOver}
-            aria-label="Entrez votre réponse"
-            placeholder={`${WORD_LEN} lettres…`}
-            maxLength={WORD_LEN}
-            onChange={(e) => {
-              const val = e.target.value
-                .toUpperCase()
-                .replace(/[^A-ZÀÂÄÉÈÊËÎÏÔÙÛÜÇ]/gi, "")
-                .slice(0, WORD_LEN)
-              setCurrentGuess(val)
-            }}
-            onKeyDown={(e) => { if (e.key === "Enter") handleSubmit() }}
-            className="flex-1 py-2 px-4 rounded-xl border-2 border-aubergine/20 bg-white/60 text-aubergine placeholder-aubergine/40 font-semibold uppercase tracking-widest text-center focus:outline-none focus:border-aubergine/60 transition-colors disabled:opacity-40"
-          />
-          <button
-            onClick={handleSubmit}
-            disabled={!currentGuess.trim() || gameOver}
-            className="bg-aubergine text-white font-semibold px-5 py-2 rounded-xl hover:opacity-90 active:scale-95 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            Valider
-          </button>
-        </div>
-
+        
         <WordleKeyboard
           letterStatuses={statuses}
           onKey={addLetter}
