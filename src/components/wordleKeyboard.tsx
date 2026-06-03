@@ -14,7 +14,7 @@ interface WordleKeyboardProps {
   disabled: boolean
 }
 
-function getKeyClass(letter: string, status?: LetterStatus): string {
+function getKeyClass(status?: LetterStatus): string {
   const base =
     "flex items-center justify-center rounded-lg font-semibold text-sm cursor-pointer select-none transition-all active:scale-95 border"
 
@@ -58,7 +58,7 @@ export function WordleKeyboard({
                   else onKey(key)
                 }}
                 className={[
-                  getKeyClass(key, status),
+                  getKeyClass(status),
                   isEnter || isDelete
                     ? "px-2 md:px-3 h-12 md:h-14 text-xs md:text-sm bg-aubergine/80 border-aubergine text-white hover:bg-aubergine"
                     : "w-8 md:w-10 h-12 md:h-14",
