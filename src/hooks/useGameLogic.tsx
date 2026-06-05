@@ -7,34 +7,34 @@ const MAX_ATTEMPTS = ZOOM_LEVELS.length - 1
 export type GameStatus = "playing" | "won"
 
 export function useGameLogic(cityAnswer: string) {
-  const { player, initPlayer, saveResult } = useCookiePlayer();
+  const { gameData, initPlayer, saveResult } = useCookiePlayer("station")
 
   const [guessCount, setGuessCount] = useState<number>(
-    () => player?.result?.tries ?? 0
-  );
+    () => gameData?.result?.tries ?? 0
+  )
   const [status, setStatus] = useState<GameStatus>(
-    () => player?.result?.won ? "won" : "playing"
-  );
+    () => gameData?.result?.won ? "won" : "playing"
+  )
+  const [guess, setGuess] = useState("")
 
-  const [guess, setGuess] = useState("");
-  const zoom = ZOOM_LEVELS[Math.min(guessCount, MAX_ATTEMPTS)];
+  const zoom = ZOOM_LEVELS[Math.min(guessCount, MAX_ATTEMPTS)]
 
-  useEffect(() => { initPlayer(); }, []);
+  useEffect(() => { initPlayer() }, [])
 
   const handleSubmit = () => {
-    if (!guess.trim() || status !== "playing") return;
+    if (!guess.trim() || status !== "playing") return
 
     if (guess.trim().toLowerCase() === cityAnswer.toLowerCase()) {
-      setStatus("won");
-      saveResult({ won: true, tries: guessCount });
+      setStatus("won")
+      saveResult({ won: true, tries: guessCount })
     } else {
-      const nextCount = guessCount + 1;
-      setGuessCount(nextCount);
-      saveResult({ won: false, tries: nextCount });
+      const nextCount = guessCount + 1
+      setGuessCount(nextCount)
+      saveResult({ won: false, tries: nextCount })
     }
 
-    setGuess("");
-  };
+    setGuess("")
+  }
 
-  return { guess, setGuess, zoom, guessCount, status, handleSubmit };
+  return { guess, setGuess, zoom, guessCount, status, handleSubmit }
 }

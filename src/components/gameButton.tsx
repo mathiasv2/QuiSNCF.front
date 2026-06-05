@@ -57,7 +57,7 @@ export function GameButton({
           text-2xl
         `
         : `
-          px-14
+          w-64
           py-3
           text-lg
         `

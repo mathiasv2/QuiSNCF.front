@@ -1,7 +1,7 @@
-import { LeaderBoard } from "../components/leaderBoard";
+import { LeaderboardContainer } from "../containers/leaderboardContainer";
 
 export function LeaderboardPage(){
     return (
-      <LeaderBoard></LeaderBoard>
+      <LeaderboardContainer></LeaderboardContainer>
     )
 }

@@ -34,7 +34,10 @@
   --color-nude: #F8C1B8;
   --color-lavande: #6558B1;
   --color-parme: #C7B2DE;
-  --color-aubergine: #3F2A56
+  --color-aubergine: #3F2A56;
+  --color-horizon: #97C7EC;
+  --color-marine: #00205B;
+  --color-burgundy: #651C32;
 
 
 }
@@ -53,4 +56,37 @@ body {
 html, body {
   background-color: #011152;
   overscroll-behavior: none;
+}
+
+
+@keyframes flip {
+  0%   { transform: rotateX(0deg); }
+  49%  { transform: rotateX(-90deg); }
+  50%  { transform: rotateX(90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-5px); }
+  40%       { transform: translateX(5px); }
+  60%       { transform: translateX(-4px); }
+  80%       { transform: translateX(4px); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.animate-flip {
+  animation: flip 0.5s ease forwards;
+}
+
+.animate-shake {
+  animation: shake 0.35s ease;
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.3s ease forwards;
 }
