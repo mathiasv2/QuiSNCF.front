@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react"
-import { type GameStatus, type GuessRow, type LetterStatus, type WordleState } from "../models/wordleTypes"
+import { type LetterStatus, type GuessRow, type GameStatus, type WordleState } from "../models/wordleTypes"
+import { verifyWord } from "../services/wordService"
 
 export type { LetterStatus, GuessRow, GameStatus, WordleState }
 
@@ -12,6 +13,7 @@ export function useWordleLogic(word: string, initialState?: WordleState) {
   const [currentGuess, setCurrentGuess] = useState("")
   const [status, setStatus] = useState<GameStatus>(initialState?.status ?? "playing")
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [validating, setValidating] = useState(false)
 
   const evaluate = useCallback(
     (guess: string): LetterStatus[] => {
@@ -34,12 +36,23 @@ export function useWordleLogic(word: string, initialState?: WordleState) {
     [WORD, WORD_LEN]
   )
 
-  const submitGuess = useCallback(() => {
+  const submitGuess = useCallback(async () => {
     const guess = currentGuess.toUpperCase()
+
     if (guess.length < WORD_LEN) {
       setErrorMessage(`Le mot doit faire ${WORD_LEN} lettres.`)
       return null
     }
+
+    setValidating(true)
+    const valid = await verifyWord(guess.toLowerCase())
+    setValidating(false)
+
+    if (!valid) {
+      setErrorMessage("Ce mot n'existe pas dans le dictionnaire.")
+      return null
+    }
+
     setErrorMessage(null)
     const result = evaluate(guess)
     const newRow: GuessRow = { letters: guess.split(""), result }
@@ -70,12 +83,12 @@ export function useWordleLogic(word: string, initialState?: WordleState) {
 
   const addLetter = useCallback(
     (letter: string) => {
-      if (currentGuess.length < WORD_LEN && status === "playing") {
+      if (currentGuess.length < WORD_LEN && status === "playing" && !validating) {
         setCurrentGuess((prev) => prev + letter)
         setErrorMessage(null)
       }
     },
-    [currentGuess.length, WORD_LEN, status]
+    [currentGuess.length, WORD_LEN, status, validating]
   )
 
   const deleteLetter = useCallback(() => {
@@ -85,6 +98,6 @@ export function useWordleLogic(word: string, initialState?: WordleState) {
 
   return {
     WORD_LEN, MAX_TRIES, guesses, currentGuess, setCurrentGuess,
-    status, errorMessage, submitGuess, addLetter, deleteLetter, letterStatuses,
+    status, errorMessage, validating, submitGuess, addLetter, deleteLetter, letterStatuses,
   }
 }
