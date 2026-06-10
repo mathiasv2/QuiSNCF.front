@@ -88,11 +88,11 @@ function WordleGameInner({
     }
   }, [errorMessage])
 
-  const handleSubmit = useCallback(() => {
-    const result = submitGuess() as any
+  const handleSubmit = useCallback(async () => {
+    const result = await submitGuess()
     if (!result) return
-    const newGuesses: GuessRow[] = result._newGuesses
-    const newStatus: GameStatus = result._newStatus
+    const newGuesses: GuessRow[] = (result as any)._newGuesses
+    const newStatus: GameStatus = (result as any)._newStatus
     saveWordleState({ guesses: newGuesses, status: newStatus })
   }, [submitGuess, saveWordleState])
 
