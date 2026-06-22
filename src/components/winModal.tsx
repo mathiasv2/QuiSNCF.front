@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { usePostPlayer } from "../hooks/usePlayer"
 import { GameType } from "../enums/gameType"
 import { useCookiePlayer } from "../hooks/useCookies"
@@ -24,7 +24,7 @@ function computeScore(guessCount: number) {
 }
 
 export function WinModal({ city, guessCount, onClose, gametype }: Props) {
-  const [visible] = useState(false)
+  const [visible, setVisible] = useState(false)
   const { submit } = usePostPlayer()
   
 
@@ -37,12 +37,19 @@ export function WinModal({ city, guessCount, onClose, gametype }: Props) {
   const [error, setError] = useState("")
   const [finalScore, setFinalScore] = useState<number | null>(null)
 
+
   const isValidPseudo = (name: string) =>
     /^[a-zA-Z0-9_\-éèêëàâùûüîïôçœæ ]+$/.test(name)
 
+  const score = computeScore(guessCount)
   const estimatedScore = computeScore(guessCount)
   const displayScore = finalScore ?? estimatedScore
   const rank = SCORE_LABELS.find((r) => displayScore >= r.min)!
+
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 10)
+    return () => clearTimeout(t)
+  }, [])
 
   const handleSave = async () => {
     if (!pseudo.trim()) return
@@ -53,9 +60,9 @@ export function WinModal({ city, guessCount, onClose, gametype }: Props) {
     setError("")
     savePseudo(pseudo.trim())
     const score = await submit({ name: pseudo.trim(), tries: guessCount + 1, score: 0, gameType: gametype })
-    if (score !== null) {
-      setFinalScore(score)
-    }
+      if (score !== null) {
+        setFinalScore(score)
+      }
     saveScoreRegistered()
     setSaved(true)
   }
