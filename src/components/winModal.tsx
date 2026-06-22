@@ -41,7 +41,6 @@ export function WinModal({ city, guessCount, onClose, gametype }: Props) {
   const isValidPseudo = (name: string) =>
     /^[a-zA-Z0-9_\-éèêëàâùûüîïôçœæ ]+$/.test(name)
 
-  const score = computeScore(guessCount)
   const estimatedScore = computeScore(guessCount)
   const displayScore = finalScore ?? estimatedScore
   const rank = SCORE_LABELS.find((r) => displayScore >= r.min)!
