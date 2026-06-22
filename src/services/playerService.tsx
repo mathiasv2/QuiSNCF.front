@@ -1,7 +1,6 @@
 import api from "../api/axiosInstance"
 import { GameType } from "../enums/gameType"
 import type { Player } from "../models/player"
-import type { PlayerScore } from "../models/playerScore"
 
 const GameTypeParam: Record<GameType, string> = {
   [GameType.Station]: "Station",
@@ -36,7 +35,7 @@ export const getBillboardByGameType = async (gametype: GameType): Promise<Player
   return reponse.data;
 }
 
-export const getLeaderboardByNameAndGametype = async (name: string, gametype: GameType): Promise<PlayerScore[]> => {
-  const response = await api.get(`player/getbyname/${name}/${GameTypeParam[gametype]}`)
-  return response.data;
-}
+// export const getLeaderboardByNameAndGametype = async (name: string, gametype: GameType): Promise<PlayerScore[]> => {
+//   const response = await api.get(`player/getbyname/${name}/${GameTypeParam[gametype]}`)
+//   return response.data;
+// }

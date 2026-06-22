@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { usePostPlayer } from "../hooks/usePlayer"
 import { GameType } from "../enums/gameType"
 import { useCookiePlayer } from "../hooks/useCookies"
@@ -24,7 +24,7 @@ function computeScore(guessCount: number) {
 }
 
 export function WinModal({ city, guessCount, onClose, gametype }: Props) {
-  const [visible, setVisible] = useState(false)
+  const [visible] = useState(false)
   const { submit } = usePostPlayer()
   
 
