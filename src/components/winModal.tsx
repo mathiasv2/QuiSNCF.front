@@ -26,6 +26,7 @@ function computeScore(guessCount: number) {
 export function WinModal({ city, guessCount, onClose, gametype }: Props) {
   const [visible, setVisible] = useState(false)
   const { submit } = usePostPlayer()
+  
 
   const { gameData, saveScoreRegistered, savedPseudo, savePseudo } = useCookiePlayer(
       gametype === GameType.Station ? "station" : "wordle"
@@ -34,17 +35,14 @@ export function WinModal({ city, guessCount, onClose, gametype }: Props) {
   const [saved, setSaved] = useState(gameData?.scoreRegistered ?? false)
   const [pseudo, setPseudo] = useState(savedPseudo ?? "")
   const [error, setError] = useState("")
+  const [finalScore, setFinalScore] = useState<number | null>(null)
 
   const isValidPseudo = (name: string) =>
     /^[a-zA-Z0-9_\-éèêëàâùûüîïôçœæ ]+$/.test(name)
 
-  const score = computeScore(guessCount)
-  const rank = SCORE_LABELS.find((r) => score >= r.min)!
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 10)
-    return () => clearTimeout(t)
-  }, [])
+  const estimatedScore = computeScore(guessCount)
+  const displayScore = finalScore ?? estimatedScore
+  const rank = SCORE_LABELS.find((r) => displayScore >= r.min)!
 
   const handleSave = async () => {
     if (!pseudo.trim()) return
@@ -54,7 +52,10 @@ export function WinModal({ city, guessCount, onClose, gametype }: Props) {
     }
     setError("")
     savePseudo(pseudo.trim())
-    await submit({ name: pseudo.trim(), tries: guessCount + 1, score: 0, gameType: gametype })
+    const score = await submit({ name: pseudo.trim(), tries: guessCount + 1, score: 0, gameType: gametype })
+    if (score !== null) {
+      setFinalScore(score)
+    }
     saveScoreRegistered()
     setSaved(true)
   }
@@ -87,7 +88,7 @@ export function WinModal({ city, guessCount, onClose, gametype }: Props) {
         </div>
 
         <div className="flex flex-col items-center">
-          <p className="text-6xl font-black text-white tracking-tight">{score}</p>
+          <p className="text-6xl font-black text-white tracking-tight">{displayScore}</p>
           <p className="text-white/50 text-xs uppercase tracking-widest">points</p>
           <p className="text-white/40 text-xs mt-1">
             Trouvé en {guessCount === 0 ? "1 essai" : `${guessCount + 1} essais`}

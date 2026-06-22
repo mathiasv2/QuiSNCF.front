@@ -1,6 +1,7 @@
 import api from "../api/axiosInstance"
 import { GameType } from "../enums/gameType"
 import type { Player } from "../models/player"
+import type { PlayerScore } from "../models/playerScore"
 
 const GameTypeParam: Record<GameType, string> = {
   [GameType.Station]: "Station",
@@ -8,17 +9,17 @@ const GameTypeParam: Record<GameType, string> = {
 }
  
 
-export const postPlayer = async (player: Player): Promise<boolean> => {
+export const postPlayer = async (player: Player): Promise<number | null> => {
   try {
-    await api.post("player/createPlayer", {
+    const response = await api.post("player/createPlayer", {
       name: player.name,
       tries: player.tries,
       gameType: player.gameType
     })
-    return true
+    return response.data
   } catch (err) {
     console.error(err)
-    return false
+    return null
   }
 }
 
@@ -33,4 +34,9 @@ export const getBillboardByGameType = async (gametype: GameType): Promise<Player
   const reponse = await api.get(`player/getTodayBillboard/${GameTypeParam[gametype]}`)
   console.log(reponse)
   return reponse.data;
+}
+
+export const getLeaderboardByNameAndGametype = async (name: string, gametype: GameType): Promise<PlayerScore[]> => {
+  const response = await api.get(`player/getbyname/${name}/${GameTypeParam[gametype]}`)
+  return response.data;
 }
