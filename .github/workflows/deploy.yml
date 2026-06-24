@@ -1,0 +1,29 @@
+name: Build, push and deploy frontend
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build, push and deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PI_HOST }}
+          username: ${{ secrets.PI_USER }}
+          key: ${{ secrets.PI_SSH_KEY }}
+          port: ${{ secrets.PI_PORT }}
+          script: |
+            cd ~/sncfdle/modules/front
+            git pull --rebase origin main
+
+            docker build -t vonrothbart/sncfdle-frontend:latest .
+            docker push vonrothbart/sncfdle-frontend:latest
+
+            kubectl rollout restart deployment game-frontend -n sncfdle
+            kubectl rollout status deployment game-frontend -n sncfdle --timeout=120s
+
+            docker image prune -f
