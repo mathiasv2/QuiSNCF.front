@@ -3,8 +3,10 @@ import { GameButton } from "../components/gameButton";
 export function HomePage() {
   return (
     <div className="flex flex-col items-center gap-4 justify-center">
-      <GameButton square label="🏆" page="leaderboard" />
-
+      <div className="flex gap-4">
+        <GameButton square label="🏆" page="leaderboard" />
+        <GameButton square label="📈" page="chart" />
+      </div>
       
       <GameButton label="Gare du jour" page="game" />
 
