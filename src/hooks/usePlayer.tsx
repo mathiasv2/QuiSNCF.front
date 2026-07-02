@@ -6,6 +6,7 @@ interface State {
   loading: boolean
   error: string | null
   success: boolean
+  score: number | null
 }
 
 export function usePostPlayer() {
@@ -13,18 +14,21 @@ export function usePostPlayer() {
     loading: false,
     error: null,
     success: false,
+    score: null,
   })
 
   const submit = async (player: Player) => {
-    setState({ loading: true, error: null, success: false })
+    setState({ loading: true, error: null, success: false, score: null })
 
     const result = await postPlayer(player)
 
-    if (result === false) {
-      setState({ loading: false, error: "Impossible d'enregistrer le score.", success: false })
+    if (result === null) {
+      setState({ loading: false, error: "Impossible d'enregistrer le score.", success: false, score: null })
     } else {
-      setState({ loading: false, error: null, success: true })
+      setState({ loading: false, error: null, success: true, score: result })
     }
+
+    return result
   }
 
   return { submit, ...state }

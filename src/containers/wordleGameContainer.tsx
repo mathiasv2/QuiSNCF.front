@@ -88,11 +88,11 @@ function WordleGameInner({
     }
   }, [errorMessage])
 
-  const handleSubmit = useCallback(() => {
-    const result = submitGuess() as any
+  const handleSubmit = useCallback(async () => {
+    const result = await submitGuess()
     if (!result) return
-    const newGuesses: GuessRow[] = result._newGuesses
-    const newStatus: GameStatus = result._newStatus
+    const newGuesses: GuessRow[] = (result as any)._newGuesses
+    const newStatus: GameStatus = (result as any)._newStatus
     saveWordleState({ guesses: newGuesses, status: newStatus })
   }, [submitGuess, saveWordleState])
 
@@ -130,10 +130,13 @@ function WordleGameInner({
           aria-live="polite"
           className={[
             "text-sm text-aubergine/80 text-center italic px-2 leading-relaxed overflow-hidden transition-all duration-500",
-            showDef ? "max-h-24 opacity-100 mt-3" : "max-h-0 opacity-0",
+            showDef ? "grid-rows-[1fr] opacity-100 mt-3" : "grid-rows-[0fr] opacity-0",
+            "grid",
           ].join(" ")}
         >
-          {showDef && `« ${definition} »`}
+          <div className="overflow-hidden">
+            {showDef && `« ${definition} »`}
+          </div>
         </div>
 
         <div className="flex gap-4 mt-4 mb-1 text-xs text-aubergine/70 items-center flex-wrap justify-center">
