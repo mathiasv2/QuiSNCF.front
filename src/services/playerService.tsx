@@ -9,17 +9,17 @@ const GameTypeParam: Record<GameType, string> = {
 }
  
 
-export const postPlayer = async (player: Player): Promise<number | null> => {
+export const postPlayer = async (player: Player): Promise<boolean> => {
   try {
-    const response = await api.post("player/createPlayer", {
+    await api.post("player/createPlayer", {
       name: player.name,
       tries: player.tries,
       gameType: player.gameType
     })
-    return response.data
+    return true
   } catch (err) {
     console.error(err)
-    return null
+    return false
   }
 }
 
@@ -36,7 +36,12 @@ export const getBillboardByGameType = async (gametype: GameType): Promise<Player
   return reponse.data;
 }
 
-// export const getLeaderboardByNameAndGametype = async (name: string, gametype: GameType): Promise<PlayerScore[]> => {
-//   const response = await api.get(`player/getbyname/${name}/${GameTypeParam[gametype]}`)
-//   return response.data;
-// }
+export const getBillboardByPlayer = async (name: string, gametype: GameType): Promise<PlayerScoreRaw[]> => {
+  const response = await api.get(`player/getByName/${name}/${gametype}`)
+  return response.data
+}
+
+export const getTotalScoreByPlayerAndGametype = async (name: string, gametype: GameType): Promise<Number> => {
+  const response = await api.get(`player/total/${name}/${gametype}`)
+  return response.data
+}
