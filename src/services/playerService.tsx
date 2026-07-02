@@ -9,17 +9,17 @@ const GameTypeParam: Record<GameType, string> = {
 }
  
 
-export const postPlayer = async (player: Player): Promise<boolean> => {
+export const postPlayer = async (player: Player): Promise<number | null> => {
   try {
-    await api.post("player/createPlayer", {
+    const response = await api.post("player/createPlayer", {
       name: player.name,
       tries: player.tries,
       gameType: player.gameType
     })
-    return true
+    return response.data
   } catch (err) {
     console.error(err)
-    return false
+    return null
   }
 }
 
