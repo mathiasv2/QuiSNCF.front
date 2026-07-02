@@ -14,8 +14,8 @@ export function PlayerChartPage() {
   const name = usePseudo()
 
   if (!name) return (
-    <p className="text-center text-aubergine/50 py-6 text-sm">
-      Enregistrez un score pour voir vos statistiques.
+    <p className="text-center text-white py-6 text-sm">
+      Enregistrez un score sur cet appareil pour voir vos statistiques.
     </p>
   )
 
