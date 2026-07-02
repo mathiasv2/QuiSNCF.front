@@ -31,7 +31,7 @@ export const getBillboard = async (): Promise<Player[]> => {
 }
 
 export const getBillboardByGameType = async (gametype: GameType): Promise<Player[]> => {
-  const reponse = await api.get(`player/getTodayBillboard/${GameTypeParam[gametype]}`)
+  const reponse = await api.get(`player/getBillboardByGameType/${GameTypeParam[gametype]}/0`)
   console.log(reponse)
   return reponse.data;
 }
