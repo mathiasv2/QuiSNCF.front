@@ -6,6 +6,7 @@ import { Footer } from './components/footer'
 import { LeaderboardPage } from './pages/leaderboardPage'
 import { NotFound } from './pages/notFoundPage'
 import { WordPage } from './pages/wordPage'
+import { PlayerChartPage } from './pages/playerChartPage'
 
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
             <Route path='/leaderboard' element={<LeaderboardPage/>}/>
             <Route path="*" element={<NotFound />} />
             <Route path="/word" element={<WordPage/>}/>
+            <Route path="/chart" element={<PlayerChartPage/>}/>
           </Routes>
         </div>
         <Footer/>
