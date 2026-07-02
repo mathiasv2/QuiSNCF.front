@@ -2,6 +2,7 @@ import { useState } from "react"
 import { PlayerChartContainer } from "../containers/playerChartContainer"
 import { GameType } from "../enums/gameType"
 import { usePseudo } from "../hooks/usePseudo"
+import { TotalScoreContainer } from "../containers/totalScorePlayerContainer"
 
 const TABS = [
   { label: "Gares", value: GameType.Station },
@@ -35,7 +36,7 @@ export function PlayerChartPage() {
           </button>
         ))}
       </div>
-
+      <TotalScoreContainer name={name} gametype={activeTab} />
       <PlayerChartContainer name={name} gametype={activeTab} />
     </div>
   )

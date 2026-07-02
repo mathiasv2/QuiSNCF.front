@@ -40,3 +40,8 @@ export const getBillboardByPlayer = async (name: string, gametype: GameType): Pr
   const response = await api.get(`player/getByName/${name}/${gametype}`)
   return response.data
 }
+
+export const getTotalScoreByPlayerAndGametype = async (name: string, gametype: GameType): Promise<Number> => {
+  const response = await api.get(`player/total/${name}/${gametype}`)
+  return response.data
+}
