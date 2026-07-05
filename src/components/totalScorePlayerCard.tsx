@@ -4,8 +4,8 @@ interface Props {
 }
 
 const LABEL: Record<string, { emoji: string; label: string; color: string }> = {
-  station: { emoji: "🚉", label: "Score total Gares",  color: "text-sky-700"     },
-  word:    { emoji: "📝", label: "Score total Mots",   color: "text-emerald-700" },
+  station: { emoji: "🚉", label: "Mon score total Gares",  color: "text-sky-700"     },
+  word:    { emoji: "📝", label: "Mon score total Mots",   color: "text-emerald-700" },
 }
 
 export function TotalScoreCard({ totalScore, gametype }: Props) {
