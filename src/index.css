@@ -38,6 +38,8 @@
   --color-horizon: #97C7EC;
   --color-marine: #00205B;
   --color-burgundy: #651C32;
+  --color-blue-fonce: #12339F;
+  --color-blue-clair: #2176D5;
 
 
 }
@@ -89,4 +91,43 @@ html, body {
 
 .animate-fadeUp {
   animation: fadeUp 0.3s ease forwards;
+}
+
+
+.messagedefilant {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  position: relative;  
+  height: 2.5rem;      
+  max-width: 20rem;  
+}
+ 
+.messagedefilant div {
+  position: absolute;
+  min-width: 100%; 
+}
+ 
+.messagedefilant div span, 
+.messagedefilant div:after {
+  position: relative;
+  display: inline-block;
+  font-size: 1rem;
+  white-space: nowrap;
+  top:0;
+}
+ 
+.messagedefilant div span {
+  animation: defilement 10s infinite linear;
+}
+ 
+ 
+@keyframes defilement {
+  0% { margin-left: 0; }
+  100% { margin-left: -100%; }
+}
+ 
+@keyframes defilement2 {
+  0% { margin-left: 100%; }
+  100% { margin-left: 0%; }
 }

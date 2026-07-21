@@ -7,6 +7,7 @@ import { LeaderboardPage } from './pages/leaderboardPage'
 import { NotFound } from './pages/notFoundPage'
 import { WordPage } from './pages/wordPage'
 import { PlayerChartPage } from './pages/playerChartPage'
+import { DisplayPage } from './pages/displayPage'
 
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
             <Route path="/word" element={<WordPage/>}/>
             <Route path="/chart" element={<PlayerChartPage/>}/>
+            <Route path="/display" element={<DisplayPage/>}/>
           </Routes>
         </div>
         <Footer/>
