@@ -2,7 +2,7 @@
 import { useDisplayStation } from "../hooks/useDisplay"
 
 export function StationDisplay() {
-  const { display, loading, error } = useDisplayStation("nancy")
+  const { display, loading, error } = useDisplayStation()
 
   if (loading)
     return <div className="text-white p-4">Chargement...</div>
