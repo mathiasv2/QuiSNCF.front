@@ -19,6 +19,17 @@ const SCORE_LABELS = [
   { min: 0,    label: "Touriste perdu",      emoji: "📍", color: "text-slate-400"   },
 ]
 
+function toCookieGameType(gametype: GameType): "station" | "wordle" | "depart" {
+  switch (gametype) {
+    case GameType.Station:
+      return "station"
+    case GameType.Display:
+      return "depart"
+    default:
+      return "wordle"
+  }
+}
+
 function computeScore(guessCount: number) {
   return Math.max(500, Math.round(5000 - guessCount * 323))
 }
@@ -26,10 +37,10 @@ function computeScore(guessCount: number) {
 export function WinModal({ city, guessCount, onClose, gametype }: Props) {
   const [visible, setVisible] = useState(false)
   const { submit } = usePostPlayer()
-  
+
 
   const { gameData, saveScoreRegistered, savedPseudo, savePseudo } = useCookiePlayer(
-      gametype === GameType.Station ? "station" : "wordle"
+      toCookieGameType(gametype)
   )
 
   const [saved, setSaved] = useState(gameData?.scoreRegistered ?? false)
