@@ -29,12 +29,13 @@ export function useCookiePlayer(gameType: GameType) {
     }, { path: "/", expires: TODAY })
   }
 
-  const saveResult = ({ won, tries }: { won: boolean; tries: number }) => {
+  const saveResult = ({ won, tries, city }: { won: boolean; tries: number; city?: string }) => {
     setCookie(COOKIE_NAME, {
       ...player,
       [gameType]: {
         ...gameData,
         result: { won, tries },
+        ...(city ? { city } : {}),
       },
     }, { path: "/", expires: TODAY })
   }

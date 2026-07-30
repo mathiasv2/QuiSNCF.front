@@ -6,6 +6,7 @@ import type { PlayerScoreRaw } from "../models/playerScore"
 const GameTypeParam: Record<GameType, string> = {
   [GameType.Station]: "Station",
   [GameType.Word]: "Word",
+  [GameType.Display]: "Display",
 }
  
 

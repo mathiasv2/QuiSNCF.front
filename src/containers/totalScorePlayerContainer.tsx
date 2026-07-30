@@ -10,6 +10,7 @@ interface Props {
 const GAMETYPE_KEY: Record<GameType, string> = {
   [GT.Station]: "station",
   [GT.Word]:    "word",
+  [GT.Display]: "display",
 }
 
 export function TotalScoreContainer({ name, gametype }: Props) {

@@ -10,12 +10,12 @@ export function StationDisplay() {
     return <div className="text-amber-400 p-4">{error}</div>
 
   return (
-    <div className="bg-blue-fonce text-white tracking-wide border border-[#1e3a5f] rounded-sm overflow-hidden">
-      <div className="flex items-center gap-4 px-4 py-2 text-xs text-slate-400 border-b border-[#1e3a5f]">
-        <div className="w-16">Heure</div>
+    <div className="w-full bg-blue-fonce text-white tracking-wide border border-[#1e3a5f] rounded-sm overflow-hidden">
+      <div className="flex items-center gap-2 sm:gap-4 px-2 sm:px-4 py-2 text-xs text-slate-400 border-b border-[#1e3a5f]">
+        <div className="w-12 sm:w-16">Heure</div>
         <div className="flex-1">Destination</div>
         <div className="w-40 hidden sm:block">Train</div>
-        <div className="w-28 text-right">Statut</div>
+        <div className="w-16 sm:w-28 text-right">Statut</div>
       </div>
 
       {display?.map((city, index) => {
@@ -23,13 +23,13 @@ export function StationDisplay() {
         return (
           <div
             key={`${city.train}-${index}`}
-            className="flex items-center gap-4 px-4 py-3 border-b border-[#1e3a5f] odd:bg-blue-fonce even:bg-blue-clair"
+            className="flex items-center gap-2 sm:gap-4 px-2 sm:px-4 py-2.5 sm:py-3 border-b border-[#1e3a5f] odd:bg-blue-fonce even:bg-blue-clair"
           >
-            <div className="w-16 text-2xl text-amber-400 tabular-nums">
+            <div className="w-12 sm:w-16 text-lg sm:text-2xl text-amber-400 tabular-nums">
               {city.scheduledTime}
             </div>
 
-            <div className="flex-1 text-lg truncate">
+            <div className="flex-1 text-sm sm:text-lg truncate">
               {city.destination}
             </div>
 
@@ -38,7 +38,7 @@ export function StationDisplay() {
             </div>
 
             <div
-              className={`w-28 text-right text-sm ${
+              className={`w-16 sm:w-28 text-right text-xs sm:text-sm ${
                 onTime ? "text-emerald-400" : "text-amber-500"
               }`}
             >
