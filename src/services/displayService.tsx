@@ -7,9 +7,10 @@ export const getTodaysCityDisplay = async (): Promise<Display[] | null> => {
     return response.data
 }
 
+
 export const checkCityInput = async (input: string): Promise<CityCheckResult> => {
     try {
-        const response = await api.post(`city/checkinput/${input})}`)
+        const response = await api.post(`city/checkinput/${encodeURIComponent(input)}`)
         return response.data
     } catch(err){
         console.log(err)
