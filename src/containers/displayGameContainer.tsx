@@ -22,7 +22,7 @@ export function DisplayGameContainer() {
 
       <div className="flex flex-col items-center w-full max-w-3xl rounded-2xl md:rounded-4xl bg-parme py-4 px-3 sm:px-6 md:px-10">
         <p className="font-semibold text-xl md:text-3xl text-center text-aubergine pt-4 md:pt-6">
-          Devinez la ville de la gare de départ
+          Devinez la ville de départ
         </p>
 
         <div className="py-6 md:py-9 w-full">
