@@ -8,7 +8,6 @@ export function HomePage() {
         <GameButton square label="🏆" page="leaderboard" />
         <div className="relative">
           <GameButton square label="📈" page="chart" />
-          <NewTag></NewTag>
         </div>
       </div>
       
@@ -16,11 +15,12 @@ export function HomePage() {
 
       <div className="relative">
         <GameButton label="Mot du jour" page="word" />
-        <NewTag></NewTag>
-
       </div>
 
-      <GameButton label="A venir" page="*" disabled />
+      <div className="relative">
+        <GameButton label="Départ du jour" page="display" />
+        <NewTag></NewTag>
+      </div>
     </div>
   );
 }
