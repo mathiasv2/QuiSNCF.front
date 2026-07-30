@@ -5,4 +5,5 @@ export interface Player {
   tries: number
   score: number
   gameType: GameType
+  proof?: string | null
 }

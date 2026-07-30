@@ -26,8 +26,9 @@ export function WordleGameContainer() {
   }
 
   const savedState: WordleState | undefined = gameData?.wordleState ?? undefined
+  const savedProof: string | null = gameData?.proof ?? null
 
-  return <WordleGameInner word={word} definition={definition} savedState={savedState} />
+  return <WordleGameInner word={word} definition={definition} savedState={savedState} savedProof={savedProof} />
 }
 
 
@@ -35,10 +36,12 @@ function WordleGameInner({
   word,
   definition,
   savedState,
+  savedProof,
 }: {
   word: string
   definition: string
   savedState?: WordleState
+  savedProof?: string | null
 }) {
   const {
     gameData,
@@ -57,7 +60,8 @@ function WordleGameInner({
     addLetter,
     deleteLetter,
     letterStatuses,
-  } = useWordleLogic(word, savedState)
+    proofRef,
+  } = useWordleLogic(word, savedState, savedProof)
 
   const [showModal, setShowModal] = useState(
     savedState?.status === "won" && !gameData?.scoreRegistered
@@ -70,7 +74,7 @@ function WordleGameInner({
   useEffect(() => {
     if (status === "won") {
       setShowDef(true)
-      saveResult({ won: true, tries: guesses.length })
+      saveResult({ won: true, tries: guesses.length, proof: proofRef.current })
       const t = setTimeout(() => setShowModal(true), WORD_LEN * 120 + 600)
       return () => clearTimeout(t)
     }
@@ -93,7 +97,8 @@ function WordleGameInner({
     if (!result) return
     const newGuesses: GuessRow[] = (result as any)._newGuesses
     const newStatus: GameStatus = (result as any)._newStatus
-    saveWordleState({ guesses: newGuesses, status: newStatus })
+    const newProof: string | null = (result as any)._proof
+    saveWordleState({ guesses: newGuesses, status: newStatus }, newProof)
   }, [submitGuess, saveWordleState])
 
   const handleKeyDown = useCallback(

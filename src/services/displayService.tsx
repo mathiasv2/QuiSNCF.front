@@ -8,9 +8,11 @@ export const getTodaysCityDisplay = async (): Promise<Display[] | null> => {
 }
 
 
-export const checkCityInput = async (input: string): Promise<CityCheckResult> => {
+export const checkCityInput = async (input: string, state?: string | null): Promise<CityCheckResult> => {
     try {
-        const response = await api.post(`city/checkinput/${encodeURIComponent(input)}`)
+        const response = await api.post(`city/checkinput/${encodeURIComponent(input)}`, null, {
+            params: state ? { state } : {}
+        })
         return response.data
     } catch(err){
         console.log(err)

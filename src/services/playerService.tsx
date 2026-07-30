@@ -15,7 +15,8 @@ export const postPlayer = async (player: Player): Promise<number | null> => {
     const response = await api.post("player/createPlayer", {
       name: player.name,
       tries: player.tries,
-      gameType: player.gameType
+      gameType: player.gameType,
+      proof: player.proof ?? null
     })
     return response.data
   } catch (err) {

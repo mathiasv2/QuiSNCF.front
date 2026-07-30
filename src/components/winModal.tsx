@@ -69,7 +69,7 @@ export function WinModal({ city, guessCount, onClose, gametype }: Props) {
     }
     setError("")
     savePseudo(pseudo.trim())
-    const score = await submit({ name: pseudo.trim(), tries: guessCount + 1, score: 0, gameType: gametype })
+    const score = await submit({ name: pseudo.trim(), tries: guessCount + 1, score: 0, gameType: gametype, proof: gameData?.proof ?? null })
       if (score !== null) {
         setFinalScore(score)
       }

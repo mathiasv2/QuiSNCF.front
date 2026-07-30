@@ -29,13 +29,14 @@ export function useCookiePlayer(gameType: GameType) {
     }, { path: "/", expires: TODAY })
   }
 
-  const saveResult = ({ won, tries, city }: { won: boolean; tries: number; city?: string }) => {
+  const saveResult = ({ won, tries, city, proof }: { won: boolean; tries: number; city?: string; proof?: string | null }) => {
     setCookie(COOKIE_NAME, {
       ...player,
       [gameType]: {
         ...gameData,
         result: { won, tries },
         ...(city ? { city } : {}),
+        ...(proof ? { proof } : {}),
       },
     }, { path: "/", expires: TODAY })
   }
@@ -50,12 +51,13 @@ export function useCookiePlayer(gameType: GameType) {
     }, { path: "/", expires: TODAY })
   }
 
-  const saveWordleState = (state: WordleState) => {
+  const saveWordleState = (state: WordleState, proof?: string | null) => {
     setCookie(COOKIE_NAME, {
       ...player,
       [gameType]: {
         ...gameData,
         wordleState: state,
+        ...(proof ? { proof } : {}),
       },
     }, { path: "/", expires: TODAY })
   }

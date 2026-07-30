@@ -1,10 +1,10 @@
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef } from "react"
 import { type LetterStatus, type GuessRow, type GameStatus, type WordleState } from "../models/wordleTypes"
-import { verifyWord } from "../services/wordService"
+import { verifyWord, checkWordInput } from "../services/wordService"
 
 export type { LetterStatus, GuessRow, GameStatus, WordleState }
 
-export function useWordleLogic(word: string, initialState?: WordleState) {
+export function useWordleLogic(word: string, initialState?: WordleState, initialProof?: string | null) {
   const WORD = word.toUpperCase()
   const WORD_LEN = WORD.length
   const MAX_TRIES = 6
@@ -14,6 +14,7 @@ export function useWordleLogic(word: string, initialState?: WordleState) {
   const [status, setStatus] = useState<GameStatus>(initialState?.status ?? "playing")
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [validating, setValidating] = useState(false)
+  const proofRef = useRef<string | null>(initialProof ?? null)
 
   const evaluate = useCallback(
     (guess: string): LetterStatus[] => {
@@ -46,12 +47,17 @@ export function useWordleLogic(word: string, initialState?: WordleState) {
 
     setValidating(true)
     const valid = await verifyWord(guess.toLowerCase())
-    setValidating(false)
 
     if (!valid) {
+      setValidating(false)
       setErrorMessage("Ce mot n'existe pas dans le dictionnaire.")
       return null
     }
+
+    // Fait avancer la chaîne de jetons côté serveur (anti-triche pour l'enregistrement du score)
+    const { token } = await checkWordInput(guess.toLowerCase(), proofRef.current)
+    if (token) proofRef.current = token
+    setValidating(false)
 
     setErrorMessage(null)
     const result = evaluate(guess)
@@ -66,7 +72,7 @@ export function useWordleLogic(word: string, initialState?: WordleState) {
       : "playing"
 
     setStatus(newStatus)
-    return { _newGuesses: newGuesses, _newStatus: newStatus }
+    return { _newGuesses: newGuesses, _newStatus: newStatus, _proof: proofRef.current }
   }, [currentGuess, guesses, evaluate, WORD_LEN, MAX_TRIES])
 
   const letterStatuses = useCallback((): Record<string, LetterStatus> => {
@@ -99,5 +105,6 @@ export function useWordleLogic(word: string, initialState?: WordleState) {
   return {
     WORD_LEN, MAX_TRIES, guesses, currentGuess, setCurrentGuess,
     status, errorMessage, validating, submitGuess, addLetter, deleteLetter, letterStatuses,
+    proofRef,
   }
 }

@@ -19,6 +19,7 @@ export function useDisplayGameLogic() {
   const [guess, setGuess] = useState("")
   const [wrongGuess, setWrongGuess] = useState(false)
   const [checking, setChecking] = useState(false)
+  const [proof, setProof] = useState<string | null>(() => gameData?.proof ?? null)
 
   useEffect(() => { initPlayer() }, [])
 
@@ -34,18 +35,19 @@ export function useDisplayGameLogic() {
 
     setChecking(true)
     try {
-      const { correct, cityName: name } = await checkCityInput(guess.trim())
+      const { correct, cityName: name, token } = await checkCityInput(guess.trim(), proof)
+      if (token) setProof(token)
 
       if (correct) {
         const foundCity = name ?? guess.trim()
         setCityName(foundCity)
         setStatus("won")
-        saveResult({ won: true, tries: guessCount, city: foundCity })
+        saveResult({ won: true, tries: guessCount, city: foundCity, proof: token })
       } else {
         const nextCount = guessCount + 1
         setGuessCount(nextCount)
         setWrongGuess(true)
-        saveResult({ won: false, tries: nextCount })
+        saveResult({ won: false, tries: nextCount, proof: token })
       }
     } finally {
       setChecking(false)
