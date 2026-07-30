@@ -7,6 +7,8 @@ const TABS = [
   { label: "Global", style: "bg-nude text-burgundy", value: "global" as const, emoji: "👑", title: "Simplement le meilleur" },
   { label: "Gares", style: "bg-menthe text-foret", value: GameType.Station, emoji: "🚉", title: "Roi des gares"  },
   { label: "Mots", style: "bg-horizon text-marine", value: GameType.Word,  emoji: "🔤", title: "Maître des mots"  },
+  { label: "Départ", style: "bg-peche text-ocre", value: GameType.Display,  emoji: "🔤", title: "Protégé de Saint Christophe"  },
+
 ] satisfies { label: string; style: string; value: "global" | GameType; emoji: string; title: string }[]
 
 type Tab = typeof TABS[number]["value"]

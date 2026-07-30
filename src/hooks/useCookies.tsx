@@ -11,7 +11,7 @@ TODAY.setHours(23, 59, 59, 0)
 const ONE_YEAR = new Date()
 ONE_YEAR.setFullYear(ONE_YEAR.getFullYear() + 1)
 
-export type GameType = "station" | "wordle"
+export type GameType = "station" | "wordle" | "depart"
 
 export function useCookiePlayer(gameType: GameType) {
   const [cookies, setCookie] = useCookies([COOKIE_NAME, COOKIE_PSEUDO])
@@ -29,12 +29,13 @@ export function useCookiePlayer(gameType: GameType) {
     }, { path: "/", expires: TODAY })
   }
 
-  const saveResult = ({ won, tries }: { won: boolean; tries: number }) => {
+  const saveResult = ({ won, tries, city }: { won: boolean; tries: number; city?: string }) => {
     setCookie(COOKIE_NAME, {
       ...player,
       [gameType]: {
         ...gameData,
         result: { won, tries },
+        ...(city ? { city } : {}),
       },
     }, { path: "/", expires: TODAY })
   }
