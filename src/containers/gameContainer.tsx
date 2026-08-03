@@ -23,7 +23,7 @@ export function GameContainer() {
 }
 
 function GameInner({ city, pictureUrl, hint, x, y }: { city: string; pictureUrl: string, hint:string, x:number, y:number }) {
-  const { guess, setGuess, zoom, guessCount, status, handleSubmit } = useGameLogic(city)
+  const { guess, setGuess, zoom, guessCount, status, checking, handleSubmit } = useGameLogic()
   const [showModal, setShowModal] = useState(status === "won")
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function GameInner({ city, pictureUrl, hint, x, y }: { city: string; pictureUrl:
 
         <div className="flex w-full mb-3 gap-x-1 px-1">
           <UserInput value={guess} onChange={setGuess} onEnter={handleSubmit} />
-          <ValidateButton onClick={handleSubmit} disabled={!guess.trim() || status === "won"} />
+          <ValidateButton onClick={handleSubmit} disabled={!guess.trim() || status === "won" || checking} />
         </div>
       </div>
     </>
