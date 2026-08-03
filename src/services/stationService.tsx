@@ -7,19 +7,9 @@ export const getRandomStation = async (): Promise<Station | null> => {
     return response.data
 }
 
-export const postInput = async (input: string) => {
+export const checkStationInput = async (input: string): Promise<CityCheckResult> => {
     try {
-        const response = await api.post(`station/checkinput/${input}`)
-        return response.data
-    } catch(err){
-        console.log(err)
-        return false
-    }
-}
-
-export const checkCityInput = async (input: string): Promise<CityCheckResult> => {
-    try {
-        const response = await api.post(`station/checkinput/${input})}`)
+        const response = await api.post(`station/checkinput/${encodeURIComponent(input)}`)
         return response.data
     } catch(err){
         console.log(err)
