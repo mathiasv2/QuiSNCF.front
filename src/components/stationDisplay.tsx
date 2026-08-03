@@ -5,7 +5,7 @@ export function StationDisplay() {
   const { display, loading, error } = useDisplayStation()
 
   if (loading)
-    return <div className="text-white p-4">Chargement...</div>
+    return <div className="text-white p-4">Attention au départ...</div>
   if (error)
     return <div className="text-amber-400 p-4">{error}</div>
 
