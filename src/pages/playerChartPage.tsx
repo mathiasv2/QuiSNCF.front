@@ -7,6 +7,7 @@ import { TotalScoreContainer } from "../containers/totalScorePlayerContainer"
 const TABS = [
   { label: "Gares", value: GameType.Station },
   { label: "Mots",  value: GameType.Word    },
+  { label: "Départs",  value: GameType.Display    },
 ] as const
 
 export function PlayerChartPage() {
